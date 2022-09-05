@@ -1,13 +1,7 @@
-import { error } from '@sveltejs/kit';
- 
-/** @type {import('./$types').PageLoad} */
-export function load({ params }) {
-  if (params.slug === 'hello-world') {
-    return {
-      title: '!#!Hello world!',
-      content: 'Welcome to our blog. Lorem ipsum dolor sit amet...'
-    };
-  }
- 
-  throw error(404, 'Not found');
-}
+<script>
+  /** @type {import('./$types').PageData} */
+  export let data;
+</script>
+
+<h1>{data.title}</h1>
+<div>{@html data.content}</div>
