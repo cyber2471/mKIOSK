@@ -1,8 +1,11 @@
 <script>
 
-export let result = null;
+export let result = '';
+export let width = null;
+export let height = null;
+
 let foo = 'baz'
-	let bar = 'qux'
+let bar = 'qux'
 
 
 async function loadView() {
@@ -26,6 +29,7 @@ async function loadView() {
 }
 
 import Coffee from "$lib/assets/coffee001.png"
+
 
 </script>
 

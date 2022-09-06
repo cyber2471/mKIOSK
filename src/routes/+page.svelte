@@ -1,7 +1,7 @@
 <script>
 	let foo = 'baz'
 	let bar = 'qux'
-	let result = null
+	let result = ''
 	
 	async function doPost () {
 		const res = await fetch('https://httpbin.org/post', {
@@ -39,18 +39,12 @@ import ListView from "./common/ListView.svelte";
 	Post it.
 </button>
 <p>
-	Result:
+	Result:{result}
 </p>
-<pre>
-{result}
-</pre>
+
 
 </main>
 
 <ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>
-
-<style>
-	img { width:200px; height:250px} 
-</style>
