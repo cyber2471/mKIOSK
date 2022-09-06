@@ -8,6 +8,12 @@ export function load({ params }) {
       content: 'Welcome to our blog. Lorem ipsum dolor sit amet...'
     };
   }
+  else if (params.slug === 'cyberpark') {
+    return {
+      title: '반갑습니다. 고객님',
+    content: 'Welcome to our blog. VIP Customer!'
+  };
+}
  
   throw error(404, 'Not found');
 }
