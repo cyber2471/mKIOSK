@@ -3,6 +3,7 @@
 export let result = '';
 export let width = null;
 export let height = null;
+export let title = null;
 
 let foo = 'baz'
 let bar = 'qux'

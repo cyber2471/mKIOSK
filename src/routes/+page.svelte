@@ -1,50 +1,57 @@
 <script>
-	let foo = 'baz'
-	let bar = 'qux'
-	let result = ''
-	
-	async function doPost () {
-		const res = await fetch('https://httpbin.org/post', {
-			method: 'POST',
-			body: JSON.stringify({
-				foo,
-				bar
-			})
-		})
-		
-		const json = await res.json()
-		result = JSON.stringify(json)
-	}
 
-    export function GET(event) {
-  // log all headers
-  console.log(...event.request.headers);
- 
-  return json({
-    // retrieve a specific header
-    userAgent: event.request.headers.get('user-agent')
-  });
+function goPage() {
+  location.href = "/main"
 }
 
-//import Icon from "$lib/assets/icon.png"
-
-import ListView from "./common/ListView.svelte";
+import VIDEO from "$lib/assets/Woman.mp4";
+import IMG_02 from "$lib/assets/main_02.png";
 
 </script>
 
 <main>
-<input bind:value={foo} />
-<input bind:value={bar} />
-<button type="button" on:click={doPost}>
-	Post it.
-</button>
-<p>
-	Result:{result}
-</p>
-
-
+	<div class="kiosk-container" on:click={goPage}>
+		<div class="kiosk-rowitem"> 
+			<video autoplay loop controls  >
+			<source src={VIDEO} type="video/mp4"> 
+			<strong>Your browser does not support the video tag.</strong>
+		  </video>
+		</div>
+		<div class="kiosk-rowitem">
+			<center>
+			<img class=img2 src={IMG_02} alt='image-02' >
+		</center>
+		</div>
+		<div class="kiosk-rowitem">Item 3</div>
+	</div>
 </main>
 
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
+
+<style>
+	video { max-width: 100%; display: block; margin: 0px auto; }
+	.kiosk-container {
+		width: 100%;
+		height: 100%;
+		display: grid;
+		grid-template-rows: repeat(3, 1fr);
+		grid-gap: 2px;
+
+		padding: 1px;
+		margin: 0px;
+        background-color: white;
+	} 
+
+	.img2 {
+		width:500px; height: 400px; align: center;
+	}
+	.kiosk-rowitem {
+		display: grid;
+		margin: 1px;
+        padding: 10px;
+		
+        background-color: #f3f4f5;
+	}
+/*
+	.kiosk-rowitem:nth-child(1) { grid-row: 1 / span 2; }
+	*/
+</style>
