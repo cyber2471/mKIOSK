@@ -1,5 +1,6 @@
 <script>
 
+
 function goPage() {
   location.href = "/main"
 }
@@ -35,19 +36,19 @@ import IMG_02 from "$lib/assets/main_02.png";
 		display: grid;
 		grid-template-rows: repeat(3, 1fr);
 		grid-gap: 2px;
-
 		padding: 1px;
 		margin: 0px;
         background-color: white;
 	} 
 
 	.img2 {
-		width:500px; height: 400px; align: center;
+		width:500px; height: 400px; align: center; 
 	}
 	.kiosk-rowitem {
 		display: grid;
 		margin: 1px;
         padding: 10px;
+		vertical-align: middle;
 		
         background-color: #f3f4f5;
 	}
