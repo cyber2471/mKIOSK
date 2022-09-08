@@ -1,6 +1,7 @@
+
 <script>
-
-
+ 
+ 
 function goPage() {
   location.href = "/main"
 }
@@ -9,7 +10,7 @@ import VIDEO from "$lib/assets/Woman.mp4";
 import IMG_02 from "$lib/assets/main_02.png";
 
 </script>
-
+ 
 <main>
 	<div class="kiosk-container" on:click={goPage}>
 		<div class="kiosk-rowitem"> 
