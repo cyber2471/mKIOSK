@@ -1,16 +1,14 @@
 <script>
 
 export let result = '';
-export let width = null;
-export let height = null;
-export let title = null;
+export let width = 100;
+export let height = 150;
+export let title = null; 
 
-let foo = 'baz'
-let bar = 'qux'
 
+let stylesheet = `width:${width}px; height:${height}px`
 
 async function loadView() {
-
     //let loc = "https://www.astems.co.kr/view.php";
     let loc = "https://httpbin.org/post";
 
@@ -34,11 +32,11 @@ import Coffee from "$lib/assets/coffee001.png"
 
 </script>
 
-<input on:click={loadView} type=button value=click>
-<p>{result}</p>
+<!-- <input on:click={loadView} type=button value=click>
+<p>{result}</p> -->
 
 <img src={Coffee} alt="download icon"/>
 
 <style>
-	img { width:150px; height:200px} 
+	img { width:100px; height: 150px; }
 </style>

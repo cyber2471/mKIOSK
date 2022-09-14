@@ -33,18 +33,26 @@ import ListView from "../common/ListView.svelte";
 </script>
 
 <main>
-<input bind:value={foo} />
+<!-- <input bind:value={foo} />
 <input bind:value={bar} />
 <button type="button" on:click={doPost}>
 	Post it.
 </button>
 <p>
 	Result:{result}
-</p>
-
+</p> -->
 
 </main>
 
+<ListView width=100 height=150></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
+<ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>

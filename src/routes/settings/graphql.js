@@ -6,7 +6,7 @@ const handler = async (req) => {
     typeDefs: gql`
       type Book {
         title: String
-        auther: String
+        author: String
       }
       type Query {
         ping: String!
@@ -27,16 +27,16 @@ const handler = async (req) => {
   apolloServer.stop();
   return resp;
 };
-
+ 
 const books = [
   {
     title: 'The Awakening',
-    auther: 'Kate Chopin',
+    author: 'Kate Chopin',
 
   },
   {
     title: 'City of Glass',
-    auther: 'Paul Auster',
+    author: 'Paul Auster',
   },
 ];
 
