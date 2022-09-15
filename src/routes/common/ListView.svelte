@@ -1,8 +1,8 @@
 <script>
 
 export let result = '';
-export let width = 100;
-export let height = 150;
+export let width = '100px';
+export let height = '150px';
 export let title = null; 
 
 
@@ -35,8 +35,19 @@ import Coffee from "$lib/assets/coffee001.png"
 <!-- <input on:click={loadView} type=button value=click>
 <p>{result}</p> -->
 
-<img src={Coffee} alt="download icon"/>
-
+<span class="container">
+	<img class="box" style="--width:{width};--height:{height}" src={Coffee} alt="download icon"/>
+</span>
+<!-- <img class="box"  src={Coffee} /> -->
+<!-- <img class="box" style="width:var(--width);height:var(--height)" src={Coffee} alt="download icon"/> -->
 <style>
-	img { width:100px; height: 150px; }
+.container {
+	border-top:1px;
+	background-color: gray;
+}
+.box {
+		width: var(--width);
+		height: var(--height);
+	}
+	/* img { width:var(--width); height: var(--height); } */
 </style>

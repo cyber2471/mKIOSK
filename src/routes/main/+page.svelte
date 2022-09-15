@@ -44,7 +44,10 @@ import ListView from "../common/ListView.svelte";
 
 </main>
 
-<ListView width=100 height=150></ListView>
+<!-- <ListView --width="100px" --height="150px"></ListView> -->
+<ListView width="300px" height="400px"></ListView>
+<ListView></ListView>
+<!-- <ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>
@@ -54,5 +57,4 @@ import ListView from "../common/ListView.svelte";
 <ListView></ListView>
 <ListView></ListView>
 <ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
+<ListView></ListView> -->
