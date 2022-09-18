@@ -3,6 +3,7 @@
  
  import { request, gql } from "graphql-request";
 
+
  const query = gql`
 	{
 		countries {
@@ -95,6 +96,7 @@ function goPage() {
 
 import VIDEO from "$lib/assets/Woman.mp4";
 import IMG_02 from "$lib/assets/main_02.png";
+import QRCODE from "$lib/assets/qrcode.png";
 
 </script>	
 
@@ -117,7 +119,7 @@ img {vertical-align: middle;}
 /* Caption text */
 .text {
   color: #f2f2f2;
-  font-size: 15px;
+  font-size: 25px;
   padding: 8px 12px;
   position: absolute;
   bottom: 8px;
@@ -165,14 +167,37 @@ img {vertical-align: middle;}
   .text {font-size: 11px}
 }
 
+h1.main-text {
+	font-size: 40px;
+	/* font-family: "@경기천년제목V"; */
+	font-family: "HY견고딕";  
+	line-height: 25px;
+}
+
+h1.sub-text {
+	font-size: 30px;
+	/* font-family: "@경기천년제목V"; */
+	/* font-family: "가는각진제목체";   */
+	font-family: "HY견고딕"; 
+}
+
+.main-textcolor {
+   color: purple;
+}
 	video { max-width: 100%; display: block; margin: 0px auto; }
 	.kiosk-container {
 		width: 100%;
 		height: 100%;
 		display: grid;
-		grid-template-rows: repeat(3, 1fr);
-		grid-gap: 2px;
-		padding: 1px;
+		/* grid-template-rows: repeat(3, 1.2fr); */
+		grid-template-rows: 1fr 1fr 1fr;
+		/* grid-template-rows: repeat(3, minmax(50%,auto)); */
+		/* align-items: stretch; */
+		justify-items: stretch;
+		vertical-align: middle;
+		text-align: center;
+		column-gap: 2px;
+		padding: 1px; 
 		margin: 0px;
         background-color: white;
 	} 
@@ -181,12 +206,17 @@ img {vertical-align: middle;}
 		/* width:100%; height: 100%;s align: center;  */
 	}
 	.kiosk-rowitem {
-		/* display: grid; */
+		
+		display: inline-block;
 		margin: 1px;
         /* padding: 10px; */ 
 		vertical-align: middle;
-		align-self: center; 
-		
+		/* align-self: center;  */
+		/* align-content: center;  */
+		/* border: 1px solid; */
+		width: 100%;
+		/* height: 100%; */
+
         background-color: white;
 	}
 
@@ -205,10 +235,18 @@ img {vertical-align: middle;}
 			<strong>Your browser does not support the video tag.</strong>
 		  </video>
 		</div>
-		<div class="kiosk-rowitem">
-			<center>
-			<img class="img2" src={IMG_02} alt='image-02' >
-		</center>
+		<div class="kiosk-rowitem" >
+			<center><br><br>
+			<img class="img2" src={QRCODE} alt='image-02' width=130px>
+			<!-- <h1 class="sub-text">( 모바일주문을 원하시면 QR코드를 스캔하세요 )</h1> -->
+			<br><br>
+		
+			<h1 class="main-text">주문하시려면</h1>
+			<h1 class="main-text"><span class="main-textcolor">화면을 터치</span>해주세요!</h1>
+			
+			<h1 class="sub-text">▶ To order, touch the screen! ◀</h1>
+
+			</center>
 		</div>
 		<div class="kiosk-rowitem">
 
@@ -217,7 +255,7 @@ img {vertical-align: middle;}
 
 				<div class="mySlides fade">
 					<div class="numbertext">1 / 3</div>
-						<img src="https://www.astems.co.kr/home/images/main/img_slide_01.jpg" alt="미래를 열어가는 아스템즈 이미지" >	
+						<img src="https://www.astems.co.kr/home/images/main/img_slide_01.jpg" alt="미래를 열어가는 아스템즈 이미지" style="height:440px">	
 					<div class="text">
 						<span>World Class IT Hub</span>
 						<!--<strong>미래를 열어가는<br> 아스템즈DEV</strong>-->
@@ -227,7 +265,7 @@ img {vertical-align: middle;}
 				</div>
 				<div class="mySlides fade">
 					<div class="numbertext">2 / 3</div>
-						<img src="https://www.astems.co.kr/home/images/main/img_slide_02.jpg" alt="비즈니스 환경에 최적화된 IT 솔루션 이미지" >				
+						<img src="https://www.astems.co.kr/home/images/main/img_slide_02.jpg" alt="비즈니스 환경에 최적화된 IT 솔루션 이미지" style="height:440px">				
 					<div class="text">
 						<span>World Class IT Hub</span>
 						<strong>비즈니스 환경에<br> 최적화된 IT 솔루션</strong>
@@ -236,7 +274,7 @@ img {vertical-align: middle;}
 				</div>		
 				<div class="mySlides fade">
 					<div class="numbertext">3 / 3</div>
-					<img src="https://www.astems.co.kr/home/images/main/img_slide_04.jpg" alt="차별화된 유지보수 서비스 이미지" >
+					<img src="https://www.astems.co.kr/home/images/main/img_slide_04.jpg" alt="차별화된 유지보수 서비스 이미지" style="height:440px">
 					<div class="text">
 						<span>World Class IT Hub</span>
 						<strong>차별화된<br> 유지보수 서비스</strong>
@@ -279,3 +317,4 @@ function showSlides() {
 	<!-- //kiosk-rowitem -->
 </div>
 <!-- //kiosk-container -->
+

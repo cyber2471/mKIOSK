@@ -27,6 +27,10 @@ async function loadView() {
 
 }
 
+
+
+// var nData = AddComma(nData);
+
 import Coffee from "$lib/assets/coffee001.png"
 
 
@@ -35,19 +39,43 @@ import Coffee from "$lib/assets/coffee001.png"
 <!-- <input on:click={loadView} type=button value=click>
 <p>{result}</p> -->
 
-<span class="container">
+<!-- <span class="container">
 	<img class="box" style="--width:{width};--height:{height}" src={Coffee} alt="download icon"/>
-</span>
+</span> -->
+
+<div class="box">
+	<slot></slot>
+	<!-- <img class="box" style="--width:{width};--height:{height}" src={Coffee} alt="download icon"/> -->
+</div>
 <!-- <img class="box"  src={Coffee} /> -->
 <!-- <img class="box" style="width:var(--width);height:var(--height)" src={Coffee} alt="download icon"/> -->
 <style>
 .container {
-	border-top:1px;
-	background-color: gray;
-}
+	/* border-top:1px solid rgba(81, 13, 240, 0.1); */
+	/* background-color: gray; */
+} 
 .box {
-		width: var(--width);
-		height: var(--height);
+		/* width: var(--width); */
+		width: 140px;
+		border: 1.5px solid #aaa;
+		border-radius: 2px;
+		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
+		transition-duration: 0.1s;
+		padding: 1em; 
+		margin: 0 0 1em 0;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 14px;
+		border-radius: 20px 20px;
+		background: transparent;
+		cursor: pointer;
+		/* align-self: stretch; */
 	}
+ .box:active {
+	margin-left:3px;
+	/* margin-top: 3px; */
+	box-shadow: none;
+	position: relative;
+	background-color: rgb(250, 244, 250);
+ }
 	/* img { width:var(--width); height: var(--height); } */
 </style>

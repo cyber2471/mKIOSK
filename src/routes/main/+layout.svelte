@@ -28,7 +28,7 @@
         <input type=button class="btn btn-primary" on:click={()=>goPath('/')}  value='처음으로'>
       </div>
       <div class="kiosk-dcell">
-        <img style="width:170px; height:35px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
+        <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
       </div>
       <div class="kiosk-dcell">   
         <img class=flag src={KOR} alt='KOR' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>   
@@ -44,6 +44,27 @@
 
 
   <slot></slot>
+
+  <center>
+    <br>
+        <div class="kiosk-hcell">
+          <div class="kiosk-dcell">
+            <input type=button class="btn btn-primary" on:click={()=>goPath('/')}  value='처음으로'>
+          </div>
+          <div class="kiosk-dcell">
+            <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
+          </div>
+          <div class="kiosk-dcell">   
+            <img class=flag src={KOR} alt='KOR' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>   
+            <img class=flag src={VTM} alt='VTM' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>
+            <img class=flag src={CHA} alt='CHA' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>
+            <img class=flag src={JAN} alt='JAN' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>
+            <img class=flag src={USA} alt='USA' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/>
+            <!--<input type=button on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'> --> 
+          </div>
+        </div>
+    <br>
+      </center>
  
 <style>
 	.kiosk-hcell {
@@ -53,10 +74,12 @@
 		display: grid;
 		/* grid-template-columns: 10% 65% 5% 5% 5% 5% 5%; */
     grid-template-columns: 35% 40% 25%;
+    grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2px;
 		padding: 1px;
 		margin: 0px;
-        background-color: white;
+    background-color: white;
+    /* border: 1px solid red; */
 	} 
 
   .kiosk-dcell {
@@ -67,6 +90,7 @@
 		padding: 1px;
 		margin: 0px;
     background-color: white;
+    /* border: 1px solid blue; */
 	} 
 nav { 
         margin-top: 0px;
