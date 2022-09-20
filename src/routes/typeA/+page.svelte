@@ -55,7 +55,7 @@ import Coffee from "$lib/assets/coffee001.png"
 
 </script>
 
-<main>
+<!-- <main> -->
 <!-- <input bind:value={foo} />
 <input bind:value={bar} />
 <button type="button" on:click={doPost}>
@@ -65,10 +65,11 @@ import Coffee from "$lib/assets/coffee001.png"
 	Result:{result}
 </p> -->
 
-</main>
+<!-- </main> -->
 
 <!-- <ListView --width="100px" --height="150px"></ListView> -->
   <div class="container">
+	<div class="itemList">
 	{#each goods as {name, price, img}, idx}
 		<Box>
 			<center>
@@ -78,45 +79,41 @@ import Coffee from "$lib/assets/coffee001.png"
 			</center>
 		</Box>	
 	{/each}
+	</div>
   </div>
 <!-- <ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
+
 <ListView></ListView> -->
 
 <style>
 	.container {
 		padding-top: 20px;
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		row-gap: 10px;
+		/* grid-template-columns: repeat(3, 1fr); */
+		/* grid-template-columns: 2fr 1fr;  */
+		column-gap: 10px;
 		/* align-self:flex-end; */
 		/* border: 1px solid red; */
 	}
-	.box { 
-			/* width: var(--width); */
-			width: 130px;
-			border: 1.5px solid #aaa;
-			border-radius: 2px;
-			box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
-			
-			padding: 1em;  
-			margin: 0 0 1em 0;
-			font-family: Arial, Helvetica, sans-serif;
-			font-size: 14px;
-		}
-	  .name {
-			font-size: 13px;
-	  }
-	  .price {
-		font-size: 15px;
-	  }
+
+	.itemList {
+		/* padding-top: 20px; */
+		display: grid;
+		margin: auto;
+		text-align: center;
+		justify-content: center;
+		grid-template-columns: repeat(3, 1fr); 
+		/* grid-template-columns: 2fr 1fr;  */
+		column-gap: 40px;
+		/* align-self:flex-end; */
+		/* border: 1px solid blue; */
+	}
+
+	.name {
+		font-size: 13px;
+    }
+    .price {
+ 		font-size: 15px;
+	 }
 		/* img { width:var(--width); height: var(--height); } */
 	</style>

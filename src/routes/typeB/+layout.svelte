@@ -11,13 +11,13 @@
   let szText = [];
 
   szText[0] = {order_qty:'주문수량', order_amount:'주문금액', 
-               totel_del:'전체삭제', cash:'현금결제', card:'카드결제',
+               total_del:'전체삭제', cash:'현금결제', card:'카드결제',
                menu:'메뉴', qty:'수량', price:'가격', screen_title:'처음으로'}
   szText[1] = {order_qty:'đặt hàng số lượng', order_amount:'số lượng đơn đặt hàng',
-               totel_del:'Xóa tất cả', cash:'tiền mặt', card:'Tín dụng thẻ',
+               total_del:'Xóa tất cả', cash:'tiền mặt', card:'Tín dụng thẻ',
                menu:'thực đơn', qty:'lượng hàng', price:'giá bán', screen_title:'Giới thiệu'}
   szText[2] = {order_qty:'ORDER QTY', order_amount:'ORDER AMOUNTS',
-               totel_del:'Delete all', cash:'cash', card:'card',
+               total_del:'Delete all', cash:'cash', card:'card',
                menu:'Menu items', qty:'Qty', price:'Price', screen_title:'Intro'}
 
   console.log(szText[nation_flag])
@@ -98,7 +98,7 @@
               <div class="kiosk-tail-amount">0</div>
             </div>
             <div class="kiosk-btn">
-              <div class="btn btn-secondary">{szText[nation_flag].totel_del}</div>
+              <div class="btn btn-secondary">{szText[nation_flag].total_del}</div>
               <div class="btn btn-warning">{szText[nation_flag].cash}</div>
               <div class="btn btn-success">{szText[nation_flag].card}</div>
             </div>

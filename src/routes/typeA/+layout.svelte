@@ -2,22 +2,18 @@
 <script>
   let nation_flag = 0;
 
-  let szTitle =  [
-    { order_qty:'주문수량', order_amount:'주문금액'}
-  ];
-
-  nation_flag = 0;
+   nation_flag = 0;
 
   let szText = [];
 
-  szText[0] = {order_qty:'주문수량', order_amount:'주문금액', 
-               totel_del:'전체삭제', cash:'현금결제', card:'카드결제',
+  szText[0] = {order_item:'주문내역', order_qty:'주문수량', order_amount:'주문금액', 
+               total_del:'전체삭제', cash:'현금결제', card:'카드결제',
                menu:'메뉴', qty:'수량', price:'가격', screen_title:'처음으로'}
-  szText[1] = {order_qty:'đặt hàng số lượng', order_amount:'số lượng đơn đặt hàng',
-               totel_del:'Xóa tất cả', cash:'tiền mặt', card:'Tín dụng thẻ',
+  szText[1] = {order_item:'lịch sử đơn hàng', order_qty:'đặt hàng số lượng', order_amount:'số lượng đơn đặt hàng',
+               total_del:'Xóa tất cả', cash:'tiền mặt', card:'Tín dụng thẻ',
                menu:'thực đơn', qty:'lượng hàng', price:'giá bán', screen_title:'Giới thiệu'}
-  szText[2] = {order_qty:'ORDER QTY', order_amount:'ORDER AMOUNTS',
-               totel_del:'Delete all', cash:'cash', card:'card',
+  szText[2] = {order_item:'ORDER ITEMS', order_qty:'ORDER QTY', order_amount:'ORDER AMOUNTS',
+               total_del:'Delete all', cash:'cash', card:'card',
                menu:'Menu items', qty:'Qty', price:'Price', screen_title:'Intro'}
 
   console.log(szText[nation_flag])
@@ -52,62 +48,117 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </svelte:head>
 
-  <center>
-<br>
-    <div class="kiosk-hcell">
-      <div class="kiosk-dcell">
-        <input bind:value={szText[nation_flag].screen_title} type=button class="btn btn-primary" on:click={()=>goPath('/')}  >
+<div class="orderMain">
+    <div class="orderGuide">
+          <center>
+          <br>
+            <div class="kiosk-hcell">
+              <div class="kiosk-dcell">
+                <input bind:value={szText[nation_flag].screen_title} type=button class="btn btn-primary" on:click={()=>goPath('/')}  >
+              </div>
+              <div class="kiosk-dcell">
+                <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
+              </div>
+              <div class="kiosk-dcell">   
+                <img class=flag src={KOR} alt='KOR' on:click={()=>goPath(0)}  value='국가별 언어아이콘'/>   
+                <img class=flag src={VTM} alt='VTM' on:click={()=>goPath(1)}  value='국가별 언어아이콘'/>
+                <!-- <img class=flag src={CHA} alt='CHA' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/> -->
+                <!-- <img class=flag src={JAN} alt='JAN' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/> -->
+                <img class=flag src={USA} alt='USA' on:click={()=>goPath(2)}  value='국가별 언어아이콘'/>
+                <!--<input type=button on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'> --> 
+              </div>
+            </div>
+            <br>
+          </center>
       </div>
-      <div class="kiosk-dcell">
-        <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
+  <!-- <p class="hline"></p> -->
+    <div class="orderSub">
+      <div class="orderLeft">
+        <slot></slot>
       </div>
-      <div class="kiosk-dcell">   
-        <img class=flag src={KOR} alt='KOR' on:click={()=>goPath(0)}  value='국가별 언어아이콘'/>   
-        <img class=flag src={VTM} alt='VTM' on:click={()=>goPath(1)}  value='국가별 언어아이콘'/>
-        <!-- <img class=flag src={CHA} alt='CHA' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/> -->
-        <!-- <img class=flag src={JAN} alt='JAN' on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'/> -->
-        <img class=flag src={USA} alt='USA' on:click={()=>goPath(2)}  value='국가별 언어아이콘'/>
-        <!--<input type=button on:click={()=>goPath('/settings')}  value='국가별 언어아이콘'> --> 
+      <div class="orderRight">
+        <div class="orderList">
+          <div class="orderTitle">{szText[nation_flag].order_item}</div>
+          <div class="itemList"></div>
+        </div>
       </div>
     </div>
-<br>
-  </center>
-
-
-  <slot></slot>
-
-  <!-- <p class="hline"></p> -->
-
-        <div class="bottom-container">
-
-          <div class="kiosk-header">
-            <div class="kiosk-title">{szText[nation_flag].menu}</div>
-            <div class="kiosk-title">{szText[nation_flag].qty}</div>
-            <div class="kiosk-title">{szText[nation_flag].price}</div>
-          </div>
-          <div class="kiosk-body">
-            <div class="kiosk-item">&nbsp;</div>
-            <div class="kiosk-item"></div>
-            <div class="kiosk-item"></div>
-          </div>         
-          <div class="kiosk-tail">
-            <div class="kiosk-summary">
-              <div class="kiosk-qty-title">{szText[nation_flag].order_qty}</div>
-              <div class="kiosk-tail-qty">0</div>
-              <div class="kiosk-amount-title">{szText[nation_flag].order_amount}</div>
-              <div class="kiosk-tail-amount">0</div>
-            </div>
-            <div class="kiosk-btn">
-              <div class="btn btn-secondary">{szText[nation_flag].totel_del}</div>
-              <div class="btn btn-warning">{szText[nation_flag].cash}</div>
-              <div class="btn btn-success">{szText[nation_flag].card}</div>
-            </div>
-          </div>
-          <div class="kiosk-payment">
-          </div>         
-        </div>
+</div>
         
 <style>
+  .orderMain {
+    display: grid;
+    /* grid-template-rows: 1fr 10fr;  */
+    grid-template-rows: 9% 91%;
+    
+    /* border: 1px solid red; */
+  }
+
+  .orderGuide {
+    /* margin-bottom: 20px; */
+    border: 1px solid blue;
+  }
+
+  .orderSub {
+    display: grid;
+    /* grid-template-columns: 2fr 1fr;  */
+    grid-template-columns: 75% 25%;
+    /* border: 1px solid black; */
+    /* margin: auto; */
+  }
+
+  .orderLeft {
+    /* border: 1px solid black; */
+    margin: auto;
+    overflow-y: auto;
+  }
+
+  .orderRight {
+    border: 1px solid black;
+    /* margin: auto; */
+  }
+
+	.itemList {
+		/* padding-top: 20px; */
+		display: grid;
+		margin: auto;
+		text-align: center;
+		justify-content: center;
+		grid-template-columns: repeat(3, 1fr); 
+		/* grid-template-columns: 2fr 1fr;  */
+		column-gap: 40px;
+		/* align-self:flex-end; */
+		/* border: 1px solid blue; */
+	}
+
+	.orderTitle {
+		display: grid;
+    /* grid-template-columns: repeat(3, 1fr); */
+    /* border:1px solid blue; */
+    background-color: rgb(104, 102, 102);
+    font-size: 22px;
+    text-align: center;
+    color: whitesmoke;
+	/* font-family: "@경기천년제목V"; */
+    font-family: "HY견고딕";  
+    line-height: 32px;
+	}  
+
+  .orderList {
+		/* padding-top: 20px; */
+		/* display: grid; */
+		/* padding: 5px; */
+		/* grid-template-columns: repeat(3, 1fr);  */
+		/* grid-template-columns: 2fr 1fr;  */
+		/* column-gap: 40px; */
+		/* align-self:flex-end; */
+		/* font-size: 20px; */
+		/* text-align: center; */
+		/* color: whitesmokes; */
+		/* font-family: "@경기천년제목V"; */
+		/* font-family: "HY견고딕";   */
+		/* border: 1px solid blue; */
+	}  
     .btn {
       font-size: 20px;
       text-align: center;
@@ -226,7 +277,7 @@
 		height: 100%;
 		display: grid;
 		/* grid-template-columns: 10% 65% 5% 5% 5% 5% 5%; */
-    grid-template-columns: 35% 40% 25%;
+    /* grid-template-columns: 35% 40% 25%; */
     grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2px;
 		padding: 1px;
@@ -249,6 +300,7 @@
   .flag {
       width: 40px; height: 30px; cursor: pointer;
   }
+
   header {
         display: flex;
         align-items: center;

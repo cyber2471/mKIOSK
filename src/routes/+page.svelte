@@ -244,7 +244,7 @@ h1.sub-text {
 			<h1 class="main-text">주문하시려면</h1>
 			<h1 class="main-text"><span class="main-textcolor">화면을 터치</span>해주세요!</h1>
 			
-			<h1 class="sub-text">▶ To order, touch the screen! ◀</h1>
+			<h1 class="sub-text">▶ To order, Touch the screen! ◀</h1>
 
 			</center>
 		</div>
