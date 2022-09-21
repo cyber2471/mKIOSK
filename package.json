@@ -17,7 +17,9 @@
 	"type": "module",
 	"dependencies": {
 		"apollo-server-svelte-kit": "^3.9.0",
+		"dexie": "^3.2.2",
 		"graphql": "^16.6.0",
-		"graphql-request": "^5.0.0"
+		"graphql-request": "^5.0.0",
+		"svelte-qrcode": "^1.0.0"
 	}
 }

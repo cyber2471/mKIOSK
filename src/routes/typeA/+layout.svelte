@@ -1,9 +1,70 @@
 
 <script>
+  import { db, Storage } from "../common/DataStore"
+  import { liveQuery } from "dexie"
+
+  let n;
+
+  export let minAge = 18;
+  export let maxAge = 35;
+
+$: friends = liveQuery(async () => {
+    //
+    // Query Dexie's API
+    //
+    const friends = await db.friends
+      // .where('age')
+      // .between(minAge, maxAge)
+      .toArray();
+
+    // Return result
+    return friends;
+  });
+
+console.log("Mydatabase:", db)
+
+export let defaultAge = 21;
+
+let status = "";
+
+let friendName = "";
+let friendAge = defaultAge;
+
+async function addFriend() {
+  try {
+
+    // Add the new friend!
+    const id = await db.friends.add({
+      name: friendName,
+      age: friendAge
+    });
+
+    status = `Friend ${friendName} successfully added. Got id ${id}`;
+    
+    // Reset form:
+    friendName = "";
+    friendAge = defaultAge;
+  } catch (error) {
+    status = `Failed to add ${friendName}: ${error}`;
+  }
+}
+
+  function addNumber() {
+    Storage.update(arr => [...arr, n]);
+    n = '';
+    // console.log("arr:",arr)
+  }
+
+  let selectedItem;
+  //goods.updateValue();
+  //console.log(goods.subscribe())
+  // const unsubscribe = goods.subscribe(value => {
+	// 	selectedItem = value;
+	// });
+
+  // console.log("return value:",Storage.subscribe.name)
+
   let nation_flag = 0;
-
-   nation_flag = 0;
-
   let szText = [];
 
   szText[0] = {order_item:'주문내역', order_qty:'주문수량', order_amount:'주문금액', 
@@ -16,7 +77,9 @@
                total_del:'Delete all', cash:'cash', card:'card',
                menu:'Menu items', qty:'Qty', price:'Price', screen_title:'Intro'}
 
-  console.log(szText[nation_flag])
+  // console.log(szText[nation_flag])
+
+// console.log(openRequest);
 
   function goPath(param)
   {
@@ -39,6 +102,36 @@
 
 </script>
 
+<ul>
+  {#if $friends}
+    {#each $friends as friend (friend.id)}
+      <li>{friend.name}, {friend.age}</li>
+    {/each}
+  {/if}
+</ul>
+
+<div>
+  <p>{status}</p>
+  <fieldset>
+    <legend>Add new friend</legend>
+    <label>
+      Name:
+      <input
+          type="text"
+          bind:value={friendName} />
+    </label>
+    <br/>
+    <label>
+      Age:
+      <input
+        type="number"
+        bind:value={friendAge} />
+    </label>
+    <br />
+    <button on:click={addFriend}>Add Friend</button>
+  </fieldset>
+</div>
+
 <svelte:head>
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
@@ -48,13 +141,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </svelte:head>
 
+  <form on:submit|preventDefault={addNumber}>
+    <input  bind:value={n} />
+    <button type="submit">Add</button>
+    </form>
+
 <div class="orderMain">
     <div class="orderGuide">
           <center>
           <br>
             <div class="kiosk-hcell">
               <div class="kiosk-dcell">
-                <input bind:value={szText[nation_flag].screen_title} type=button class="btn btn-primary" on:click={()=>goPath('/')}  >
+                <input bind:value={szText[nation_flag].screen_title} type=button class="top-btn btn-primary" on:click={()=>goPath('/')}  >
               </div>
               <div class="kiosk-dcell">
                 <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
@@ -79,7 +177,13 @@
       <div class="orderRight">
         <div class="orderList">
           <div class="orderTitle">{szText[nation_flag].order_item}</div>
-          <div class="itemList"></div>
+          {#each $Storage as number, idx} 
+            <div class="itemList">{idx}, {number} </div>
+          {/each}     
+        </div>
+        <div>
+            <div class="btn btn-warning">주문하기</div>
+            <div class="btn btn-success">전체삭제</div>
         </div>
       </div>
     </div>
@@ -90,52 +194,54 @@
     display: grid;
     /* grid-template-rows: 1fr 10fr;  */
     grid-template-rows: 9% 91%;
-    
     /* border: 1px solid red; */
   }
 
   .orderGuide {
     /* margin-bottom: 20px; */
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
   }
 
   .orderSub {
     display: grid;
     /* grid-template-columns: 2fr 1fr;  */
     grid-template-columns: 75% 25%;
-    /* border: 1px solid black; */
+    /* border: 1px solid blue; */
     /* margin: auto; */
   }
 
   .orderLeft {
     /* border: 1px solid black; */
-    margin: auto;
+    /* margin: auto; */
     overflow-y: auto;
   }
 
   .orderRight {
-    border: 1px solid black;
+    border: 1px solid rgb(219, 215, 215);
+    display: grid;
+    grid-template-rows: 85% 15%
     /* margin: auto; */
   }
 
 	.itemList {
 		/* padding-top: 20px; */
-		display: grid;
-		margin: auto;
-		text-align: center;
-		justify-content: center;
-		grid-template-columns: repeat(3, 1fr); 
+		/* display: grid; */
+		/* margin: auto; */
+		text-align: center; 
+		/* justify-content: center; */
+		/* grid-template-rows: repeat(15, 1fr);  */
 		/* grid-template-columns: 2fr 1fr;  */
-		column-gap: 40px;
+		/* column-gap: 40px; */
 		/* align-self:flex-end; */
 		/* border: 1px solid blue; */
 	}
 
 	.orderTitle {
-		display: grid;
+		/* display: grid; */
     /* grid-template-columns: repeat(3, 1fr); */
     /* border:1px solid blue; */
     background-color: rgb(104, 102, 102);
+    width: 100%;
     font-size: 22px;
     text-align: center;
     color: whitesmoke;
@@ -148,7 +254,7 @@
 		/* padding-top: 20px; */
 		/* display: grid; */
 		/* padding: 5px; */
-		/* grid-template-columns: repeat(3, 1fr);  */
+		/* grid-template-rows: repeat(10 1fr);   */
 		/* grid-template-columns: 2fr 1fr;  */
 		/* column-gap: 40px; */
 		/* align-self:flex-end; */
@@ -157,13 +263,49 @@
 		/* color: whitesmokes; */
 		/* font-family: "@경기천년제목V"; */
 		/* font-family: "HY견고딕";   */
-		/* border: 1px solid blue; */
+ 
+		/* border: 1px solid red; */
+    /* margin:auto; */
 	}  
+  
+  .top-btn {
+    font-size: 20px;
+      text-align: center;
+      vertical-align: middle;
+      font-family: "HY견고딕"; 
+      /* border: 1px solid purple; */
+    }
+
     .btn {
+      width: 100%;
       font-size: 20px;
       text-align: center;
       vertical-align: middle;
       font-family: "HY견고딕"; 
+      line-height: 60px;
+      /* border: 1px solid purple; */
+      
+    }
+
+    .btn.btn-order {
+      color: whitesmoke;
+      font-size: 20px;
+      text-align: center;
+      vertical-align: middle;
+      font-family: "HY견고딕"; 
+      line-height: 60px;
+      background-color: rgb(167, 165, 165);
+      /* border: 1px solid purple; */
+    }
+
+    .btn.btn-del{
+      color: whitesmoke;
+      font-size: 20px;
+      text-align: center;
+      vertical-align: middle;
+      font-family: "HY견고딕"; 
+      line-height: 60px;
+      background-color: rgb(26, 185, 5);
       /* border: 1px solid purple; */
     }
     .bottom-container {

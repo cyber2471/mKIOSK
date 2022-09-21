@@ -2,7 +2,7 @@
 <script context="module">
  
  import { request, gql } from "graphql-request";
-
+ import QRCode from "./common/QRJS.svelte";
 
  const query = gql`
 	{
@@ -12,7 +12,7 @@
 		}
 	}
 	`;
-
+ 
 
 /* 	const res = await request("https://countries.trevorblades.com/", query)
 	   .then((data) => console.log(data))
@@ -208,7 +208,7 @@ h1.sub-text {
 	.kiosk-rowitem {
 		
 		display: inline-block;
-		margin: 1px;
+		margin: auto;
         /* padding: 10px; */ 
 		vertical-align: middle;
 		/* align-self: center;  */
@@ -224,7 +224,10 @@ h1.sub-text {
 		max-width:100%; height: 100%; 
 	}
 	/* .kiosk-rowitem:nth-child(1) { grid-row: 1 / span 2; } */
-
+	.qrcode {
+		align-content: center;
+		margin: auto;
+	}
 </style>
 
 
@@ -236,17 +239,19 @@ h1.sub-text {
 		  </video>
 		</div>
 		<div class="kiosk-rowitem" >
-			<center><br><br>
-			<img class="img2" src={QRCODE} alt='image-02' width=130px>
+			<br>
+			<!-- <img class="img2" src={QRCODE} alt='image-02' width=130px> -->
 			<!-- <h1 class="sub-text">( 모바일주문을 원하시면 QR코드를 스캔하세요 )</h1> -->
-			<br><br>
-		
+			<div class="qrcode">
+				<center>
+					<QRCode codeValue="https://38ce-125-129-62-2.jp.ngrok.io" squareSize=100/>
+				</center>
+		    </div>
 			<h1 class="main-text">주문하시려면</h1>
 			<h1 class="main-text"><span class="main-textcolor">화면을 터치</span>해주세요!</h1>
 			
 			<h1 class="sub-text">▶ To order, Touch the screen! ◀</h1>
-
-			</center>
+			
 		</div>
 		<div class="kiosk-rowitem">
 

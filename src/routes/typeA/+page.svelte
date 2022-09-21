@@ -16,6 +16,8 @@
 		{ name:'좋은쉐이크',   price:1500, img:'' },
 		{ name:'미친쉐이크',   price:500,  img:'' },	
 		{ name:'졸라쉐이크',   price:500,  img:'' },
+	
+
 	];
 
 	// console.log(content)
@@ -35,7 +37,7 @@
 
     export function GET(event) {
   // log all headers
-  console.log(...event.request.headers);
+//   console.log(...event.request.headers);
 
   return json({
     // retrieve a specific header
