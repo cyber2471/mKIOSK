@@ -1,9 +1,14 @@
+
 <script>
+// import { setContext, getContext } from 'svelte'
+import { db, Storage } from "../common/DataStore"
+
 	let foo = 'baz'
 	let bar = 'qux'
 	let result = ''
 	let title = ''
 	let content = ''
+	let status = ''
 	
 	let goods = [
 		{ name:'아메리카노',   price:3500, img:'' },
@@ -20,9 +25,7 @@
 
 	];
 
-	// console.log(content)
-
-	async function doPost () {
+/* 	async function doPost () {
 		const res = await fetch('https://httpbin.org/post', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -36,14 +39,12 @@
 	}
 
     export function GET(event) {
-  // log all headers
-//   console.log(...event.request.headers);
 
   return json({
     // retrieve a specific header
     userAgent: event.request.headers.get('user-agent')
   });
-}
+} */
 
 function AddComma(num)             
 {                
@@ -51,6 +52,34 @@ function AddComma(num)
 	return num.toString().replace(regexp, ',');            
 } 
 //import Icon from "$lib/assets/icon.png"
+
+async function fvSelected(name, price) {
+
+//   alert('11')
+  try {
+
+    // Add the new friend!
+    const id = await db.orderList.add({
+		gName:name, 
+		gAttr:'', 
+		gPrice:price, 
+		ctime:'20220921121212', 
+		utime:'20220921121212', 
+		userid:'cyberpark', 
+		remark:''
+    });
+
+    status = `gMeatadata successfully added. Got id ${id}`;
+    
+    // Reset form:
+
+  } catch (error) {
+    status = `Failed to add ${gName}: ${error}`;
+  }
+
+//   console.log(id)
+}
+
 
 import Box from "../common/ListView.svelte";
 import Coffee from "$lib/assets/coffee001.png"
@@ -69,13 +98,14 @@ import Coffee from "$lib/assets/coffee001.png"
 
 <!-- </main> -->
 
+
 <!-- <ListView --width="100px" --height="150px"></ListView> -->
   <div class="container">
 	<div class="itemList">
 	{#each goods as {name, price, img}, idx}
 		<Box>
-			<center>
-				<img width=100px height=150px src={Coffee} alt="download icon"/>
+			<center on:click={() => fvSelected( name, price)}>
+				<img  width=100px height=150px src={Coffee} alt="download icon"/>
 				<span class="name">{name}</span><br>	
 				<span class="price">￦{AddComma(price)}</span>
 			</center>

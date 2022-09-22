@@ -16,12 +16,14 @@ import { get, writable } from 'svelte/store'
 // };
 
 function persist(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    // localStorage.setItem(key, JSON.stringify(value)); // localStorage
+    sessionStorage.setItem(key, JSON.stringify(value)); // sessionStorage
     // console.log(key, value)
 }
   
 export function DBStore(key, initialValue) {
-    const sessionValue = JSON.parse(localStorage.getItem(key));
+    // const sessionValue = JSON.parse(localStorage.getItem(key)); //localStorage
+    const sessionValue = JSON.parse(sessionStorage.getItem(key)); //sessionStorage
     if (!sessionValue) persist(key, initialValue);
   
     const store = writable(sessionValue || initialValue);

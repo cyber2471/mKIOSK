@@ -63,7 +63,9 @@ import Coffee from "$lib/assets/coffee001.png"
 		transition-duration: 0.1s;
 		padding: 1em; 
 		margin: 0 0 1em 0;
-		font-family: Arial, Helvetica, sans-serif;
+		/* font-family: Arial, Helvetica, sans-serif; */
+		font-family:'Roboto', sans-serif;
+		font-weight: 600;
 		font-size: 14px;
 		border-radius: 20px 20px;
 		background: transparent;

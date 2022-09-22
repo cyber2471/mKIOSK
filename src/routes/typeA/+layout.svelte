@@ -3,67 +3,59 @@
   import { db, Storage } from "../common/DataStore"
   import { liveQuery } from "dexie"
 
-  let n;
-
-  export let minAge = 18;
-  export let maxAge = 35;
-
-$: friends = liveQuery(async () => {
+$: orderList = liveQuery(async () => {
     //
     // Query Dexie's API
     //
-    const friends = await db.friends
+    const orderList = await db.orderList
       // .where('age')
       // .between(minAge, maxAge)
       .toArray();
 
     // Return result
-    return friends;
+    return  await orderList
+      ;
   });
 
-console.log("Mydatabase:", db)
-
-export let defaultAge = 21;
-
-let status = "";
-
-let friendName = "";
-let friendAge = defaultAge;
-
-async function addFriend() {
-  try {
-
-    // Add the new friend!
-    const id = await db.friends.add({
-      name: friendName,
-      age: friendAge
-    });
-
-    status = `Friend ${friendName} successfully added. Got id ${id}`;
-    
-    // Reset form:
-    friendName = "";
-    friendAge = defaultAge;
-  } catch (error) {
-    status = `Failed to add ${friendName}: ${error}`;
-  }
-}
-
-  function addNumber() {
-    Storage.update(arr => [...arr, n]);
-    n = '';
-    // console.log("arr:",arr)
+  function orderDel(idx)
+  {
+    console.log(idx)
   }
 
-  let selectedItem;
-  //goods.updateValue();
-  //console.log(goods.subscribe())
-  // const unsubscribe = goods.subscribe(value => {
-	// 	selectedItem = value;
-	// });
+  function orderOption(idx)
+  {
+    console.log(idx)
+  }
+  // $: friends = liveQuery(async () => {
+  //   const lowerNamePattern = namePattern.toLowerCase();
+  //   const collection =
+  //     orderBy === "age"
+  //       ? db.friends
+  //           // Let "age" index filter age criteria and sort
+  //           .where("age")
+  //           .between(minAge || 0, maxAge || Infinity, true, true)
+  //           // filter name criteria "manually":
+  //           .filter(friend =>
+  //             friend.name.toLowerCase().startsWith(lowerNamePattern)
+  //           )
+  //       : db.friends
+  //           // Let "name" index filter name and sort
+  //           .where("name")
+  //           .startsWithIgnoreCase(namePattern)
+  //           // Filter age criteria "manually":
+  //           .filter(friend => friend.age >= minAge && friend.age <= maxAge);
+
+  //   // Return a paged result:
+  //   return await collection
+  //     .offset(offset)
+  //     .limit(pageSize)
+  //     .toArray();
+  // });
+
 
   // console.log("return value:",Storage.subscribe.name)
 
+  let order_qty = 1;
   let nation_flag = 0;
   let szText = [];
 
@@ -80,6 +72,10 @@ async function addFriend() {
   // console.log(szText[nation_flag])
 
 // console.log(openRequest);
+
+function orderChange(num) {
+  order_qty += num;
+}
 
   function goPath(param)
   {
@@ -98,18 +94,20 @@ async function addFriend() {
   import VTM from "$lib/assets/VTM.png"
   import USA from "$lib/assets/USA.png"
   import CHA from "$lib/assets/CHA.png"
+  import DEL from "$lib/assets/delete.png"
+  import OPT from "$lib/assets/option.png"  
  // import logo from "https://www.astems.co.kr/home/images/logo_20200515.png"
 
 </script>
 
-<ul>
-  {#if $friends}
-    {#each $friends as friend (friend.id)}
-      <li>{friend.name}, {friend.age}</li>
+<!-- <ul>
+  {#if $orderList}
+    {#each $orderList as order (order.id)}
+      <li>{order.gName}, {order.gPrice}</li>
     {/each}
   {/if}
-</ul>
-
+</ul> -->
+<!-- 
 <div>
   <p>{status}</p>
   <fieldset>
@@ -130,21 +128,21 @@ async function addFriend() {
     <br />
     <button on:click={addFriend}>Add Friend</button>
   </fieldset>
-</div>
+</div> -->
 
 <svelte:head>
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
-
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </svelte:head>
 
-  <form on:submit|preventDefault={addNumber}>
+<!--   <form on:submit|preventDefault={addNumber}>
     <input  bind:value={n} />
     <button type="submit">Add</button>
-    </form>
+    </form> -->
 
 <div class="orderMain">
     <div class="orderGuide">
@@ -175,11 +173,22 @@ async function addFriend() {
         <slot></slot>
       </div>
       <div class="orderRight">
-        <div class="orderList">
+        <div class="orderList"> 
           <div class="orderTitle">{szText[nation_flag].order_item}</div>
-          {#each $Storage as number, idx} 
-            <div class="itemList">{idx}, {number} </div>
-          {/each}     
+          <div class="orderDetail">
+            {#if $orderList}
+            {#each $orderList as order, idx} 
+              <div class="itemList">{order.gName}</div>
+              <div class="itemEtc">
+                <div><img style="width:17px;cursor:pointer" src={OPT} alt='KOR' on:click={()=>orderOption(idx)}/></div>
+                <div class=" btn-outline-primary" on:click={() => orderChange(-1)}>-</div>
+                <div>{order_qty}</div>
+                <div class=" btn-outline-danger" on:click={() => orderChange(1)}>+</div>
+                <div><img style="width:17px;cursor:pointer" src={DEL} alt='KOR' on:click={()=>orderDel(idx)}/></div>
+              </div>
+            {/each}   
+            {/if}  
+          </div>
         </div>
         <div>
             <div class="btn btn-warning">주문하기</div>
@@ -190,6 +199,25 @@ async function addFriend() {
 </div>
         
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+    .button-plus {
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    padding-top: 0px;
+    cursor: pointer;
+    border: 1px inset black;
+  }
+
+  .button-minus {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: auto;
+    padding-top: 0px;
+    border: 1px inset black;
+  }
   .orderMain {
     display: grid;
     /* grid-template-rows: 1fr 10fr;  */
@@ -223,17 +251,51 @@ async function addFriend() {
     /* margin: auto; */
   }
 
-	.itemList {
+  .orderDetail {
 		/* padding-top: 20px; */
-		/* display: grid; */
+		display: grid;
+		/* margin: auto; */
+		/* justify-content: center; */
+		/* grid-template-rows: repeat(15, 1fr);  */
+		grid-template-columns: 60% 40%; 
+    row-gap: 2px;
+    /* background-color: rgb(236, 236, 229); */
+		/* align-self:flex-end; */
+		/* border: 1px solid red; */
+    /* border: 1px inset rgb(235, 230, 230);  */
+	}
+
+  .itemEtc {
+		/* padding-top: 20px; */
+		display: grid;
 		/* margin: auto; */
 		text-align: center; 
 		/* justify-content: center; */
 		/* grid-template-rows: repeat(15, 1fr);  */
-		/* grid-template-columns: 2fr 1fr;  */
-		/* column-gap: 40px; */
+		grid-template-columns: repeat(4, 1fr); 
+    line-height: 35px;
+    background-color: rgb(236, 236, 229);
+    font-size: 14px;
+    font-family: 'Nanum Myeongjo', serif;  
 		/* align-self:flex-end; */
-		/* border: 1px solid blue; */
+		/* border: 1px inset rgb(235, 230, 230);  */
+	}
+
+	.itemList {
+		/* padding-top: 20px; */
+		display: grid;
+		/* margin: auto; */
+		text-align: left; 
+		/* justify-content: center; */
+		/* grid-template-rows: repeat(15, 1fr);  */
+		/* grid-template-columns: repeat(4, 1fr);  */
+    padding: 2px 0px 0px 5px;
+    font-family: 'Nanum Myeongjo', serif; 
+    font-size: 16px;
+    line-height: 35px;
+    background-color: rgb(236, 236, 229);
+		/* align-self:flex-end; */
+		/* border: 1px inset rgb(235, 230, 230); */
 	}
 
 	.orderTitle {
@@ -246,7 +308,8 @@ async function addFriend() {
     text-align: center;
     color: whitesmoke;
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕";  
+    /* font-family: "HY견고딕";   */
+    font-family: 'Nanum Myeongjo', serif;  
     line-height: 32px;
 	}  
 
@@ -256,12 +319,17 @@ async function addFriend() {
 		/* padding: 5px; */
 		/* grid-template-rows: repeat(10 1fr);   */
 		/* grid-template-columns: 2fr 1fr;  */
-		/* column-gap: 40px; */
+    overflow-x: hidden;
+    overflow-y: auto;
+		row-gap: 5px;
 		/* align-self:flex-end; */
-		/* font-size: 20px; */
+		font-size: 13px;
 		/* text-align: center; */
 		/* color: whitesmokes; */
 		/* font-family: "@경기천년제목V"; */
+    font-family:'Roboto', sans-serif;
+    
+    font-weight: 600;
 		/* font-family: "HY견고딕";   */
  
 		/* border: 1px solid red; */
@@ -270,18 +338,24 @@ async function addFriend() {
   
   .top-btn {
     font-size: 20px;
+    border: 1.5px solid #aaa;
+    border-radius: 5px 5px;
+		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
       text-align: center;
       vertical-align: middle;
-      font-family: "HY견고딕"; 
+      /* font-family: "HY견고딕";  */
+      font-family: 'Nanum Myeongjo', serif;  
       /* border: 1px solid purple; */
     }
 
     .btn {
       width: 100%;
       font-size: 20px;
+      font-weight: bold;
       text-align: center;
       vertical-align: middle;
-      font-family: "HY견고딕"; 
+      /* font-family: "HY견고딕";  */
+      font-family: 'Nanum Myeongjo', serif;  
       line-height: 60px;
       /* border: 1px solid purple; */
       
@@ -292,7 +366,8 @@ async function addFriend() {
       font-size: 20px;
       text-align: center;
       vertical-align: middle;
-      font-family: "HY견고딕"; 
+      /* font-family: "HY견고딕";  */
+      font-family: 'Nanum Myeongjo', serif;  
       line-height: 60px;
       background-color: rgb(167, 165, 165);
       /* border: 1px solid purple; */
@@ -303,7 +378,8 @@ async function addFriend() {
       font-size: 20px;
       text-align: center;
       vertical-align: middle;
-      font-family: "HY견고딕"; 
+      /* font-family: "HY견고딕";  */
+      font-family: 'Nanum Myeongjo', serif;  
       line-height: 60px;
       background-color: rgb(26, 185, 5);
       /* border: 1px solid purple; */
@@ -322,7 +398,8 @@ async function addFriend() {
     text-align: center;
     /* color: whitesmokes; */
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕";  
+    /* font-family: "HY견고딕";   */
+    font-family: 'Nanum Myeongjo', serif;  
   }
   .kiosk-qty-title {
 		display: grid;
@@ -334,7 +411,8 @@ async function addFriend() {
     text-align: center;
     /* color: whitesmokes; */
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕";  
+    /* font-family: "HY견고딕";   */
+    font-family: 'Nanum Myeongjo', serif;  
   }
   .kiosk-tail-qty {
     text-align: end;
@@ -343,7 +421,8 @@ async function addFriend() {
     text-align:end;
     /* color: whitesmokes; */
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕"; 
+    /* font-family: "HY견고딕";  */
+    font-family: 'Nanum Myeongjo', serif;  
   }
   .kiosk-tail-amount {
     text-align: end;
@@ -351,7 +430,8 @@ async function addFriend() {
     font-size: 20px;
     /* color: whitesmokes; */
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕"; 
+    /* font-family: "HY견고딕";  */
+    font-family: 'Nanum Myeongjo', serif;  
   }
 
     .kiosk-btn {
@@ -410,7 +490,8 @@ async function addFriend() {
     text-align: center;
     color: whitesmoke;
 	/* font-family: "@경기천년제목V"; */
-    font-family: "HY견고딕";  
+    /* font-family: "HY견고딕";   */
+    font-family: 'Nanum Myeongjo', serif;  
     line-height: 32px;
   }
 	.kiosk-hcell {
