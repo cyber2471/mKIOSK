@@ -193,7 +193,7 @@ function orderChange(num) {
                 <input bind:value={szText[nation_flag].screen_title} type=button class="top-btn btn-primary" on:click={()=>goPath('/')}  >
               </div>
               <div class="kiosk-dcell">
-                <img style="width:170px; height:31px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
+                <img style="width:100px; height:20px" src='https://www.astems.co.kr/home/images/logo_20200515.png' alt='logo' />
               </div>
               <div class="kiosk-dcell">   
                 <img class=flag src={KOR} alt='KOR' on:click={()=>goPath(0)}  value='국가별 언어아이콘'/>   
@@ -273,7 +273,7 @@ function orderChange(num) {
   .orderSub {
     display: grid;
     /* grid-template-columns: 2fr 1fr;  */
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 58% 43%;
     /* border: 1px solid blue; */
     /* margin: auto; */
   }
@@ -331,7 +331,7 @@ function orderChange(num) {
 		/* grid-template-columns: repeat(4, 1fr);  */
     padding: 2px 0px 0px 5px;
     font-family: 'Nanum Myeongjo', serif; 
-    font-size: 16px;
+    font-size: 12px;
     line-height: 35px;
     background-color: rgb(236, 236, 229);
 		/* align-self:flex-end; */
@@ -344,7 +344,7 @@ function orderChange(num) {
     /* border:1px solid blue; */
     background-color: rgb(104, 102, 102);
     width: 100%;
-    font-size: 22px;
+    font-size: 15px;
     text-align: center;
     color: whitesmoke;
 	/* font-family: "@경기천년제목V"; */
@@ -363,12 +363,11 @@ function orderChange(num) {
     overflow-y: auto;
 		row-gap: 5px;
 		/* align-self:flex-end; */
-		font-size: 13px;
+		font-size: 12px;
 		/* text-align: center; */
 		/* color: whitesmokes; */
 		/* font-family: "@경기천년제목V"; */
     font-family:'Roboto', sans-serif;
-    
     font-weight: 600;
 		/* font-family: "HY견고딕";   */
  
@@ -377,13 +376,14 @@ function orderChange(num) {
 	}  
   
   .top-btn {
-    font-size: 20px;
+    /* font-size: 20px; */
     border: 1.5px solid #aaa;
     border-radius: 5px 5px;
 		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
-    padding: 5px 10px 5px 10px;
+    /* padding: 5px 10px 5px 10px; */
       text-align: center;
       vertical-align: middle;
+      font-size: 14px;
       /* font-family: "HY견고딕";  */
       font-family: 'Nanum Myeongjo', serif;  
       /* border: 1px solid purple; */
@@ -391,7 +391,7 @@ function orderChange(num) {
 
     .btn {
       width: 100%;
-      font-size: 20px;
+      font-size: 13px;
       font-weight: bold;
       text-align: center;
       vertical-align: middle;
@@ -556,13 +556,13 @@ function orderChange(num) {
 		/* grid-template-columns: 100px; */
 		grid-gap: 2px;
 		padding: 1px;
-		margin: 0px;
+		margin: 10px;
     background-color: white;
     /* border: 1px solid blue; */
 	} 
 
   .flag {
-      width: 40px; height: 30px; cursor: pointer;
+      width: 20px; height: 15px; cursor: pointer;
   }
 
   header {

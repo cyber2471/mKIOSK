@@ -86,7 +86,7 @@ async function fvSelected(name, qty, price) {
 }
 
 
-import Box from "../common/ListView.svelte";
+import Box from "../common/Box.svelte";
 import Coffee from "$lib/assets/coffee001.png"
 
 </script>
@@ -109,13 +109,15 @@ import Coffee from "$lib/assets/coffee001.png"
 	<div class="itemList">
 	{#each goods as {name, price, img}, idx}
 		<Box>
-			<center on:click={() => fvSelected( name, 1, price)}>
-				<img  width=100px height=150px src={Coffee} alt="download icon"/>
-				<span class="name">{name}</span><br>	
-				<span class="price">￦{AddComma(price)}</span>
-			</center>
+			<!-- <center on:click={() => fvSelected( name, 1, price)}> -->
+				<div on:click={() => fvSelected( name, 1, price)}>
+					<img  width=60px height=85px src={Coffee} alt="download icon"/>
+				</div>
+				<div class="name">{name}</div>
+				<div class="price">￦{AddComma(price)}</div>
+			<!-- </center> -->
 		</Box>	
-	{/each}
+	{/each} 
 	</div>
   </div>
 <!-- <ListView></ListView>
@@ -124,12 +126,13 @@ import Coffee from "$lib/assets/coffee001.png"
 
 <style>
 	.container {
-		padding-top: 20px;
+		/* padding-top: 20px; */
 		display: grid;
-		/* grid-template-columns: repeat(3, 1fr); */
+		/* grid-template-columns: repeat(1, 1fr); */
 		/* grid-template-columns: 2fr 1fr;  */
-		column-gap: 10px;
+		/* column-gap: 10px; */
 		/* align-self:flex-end; */
+		margin: 0px 0px 0px 0px;
 		/* border: 1px solid red; */
 	}
 
@@ -139,18 +142,24 @@ import Coffee from "$lib/assets/coffee001.png"
 		margin: auto;
 		text-align: center;
 		justify-content: center;
-		grid-template-columns: repeat(3, 1fr); 
+		grid-template-columns: repeat(2, 1fr); 
 		/* grid-template-columns: 2fr 1fr;  */
-		column-gap: 40px;
+		column-gap: 3px;
 		/* align-self:flex-end; */
-		/* border: 1px solid blue; */
+		/* border: 1px solid black; */
 	}
 
 	.name {
-		font-size: 13px;
+		font-size: 12px;
+		line-height: 10px;
+		/* margin: auto; */
+		/* border: 1px solid red; */
     }
     .price {
- 		font-size: 15px;
+ 		font-size: 12px;
+		 line-height: 10px;
+		 /* margin: auto; */
+		 /* border: 1px solid blue; */
 	 }
 		/* img { width:var(--width); height: var(--height); } */
 	</style>

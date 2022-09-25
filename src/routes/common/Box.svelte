@@ -56,20 +56,25 @@ import Coffee from "$lib/assets/coffee001.png"
 } 
 .box {
 		/* width: var(--width); */
-		/* width: 80px; */
-		border: 1.5px solid #aaa;
+		display: grid;
+		grid-template-rows: repeat(3, 1fr); 
+		width: 85px;
+		height: 120px;
+		/* border: 1.5px solid #aaa; */
 		border-radius: 2px;
 		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
 		transition-duration: 0.1s;
-		padding: 1em; 
-		margin: 0 0 1em 0;
+		/* padding: 1em;  */
+		margin: 0 0 2px 0;
 		/* font-family: Arial, Helvetica, sans-serif; */
-		font-family:'Roboto', sans-serif;
+		/* font-family:'Roboto', sans-serif; */
+		font-family: 'Nanum Myeongjo', serif; 
 		font-weight: 600;
 		font-size: 14px;
-		border-radius: 20px 20px;
+		border-radius: 10px 10px;
 		background: transparent;
 		cursor: pointer;
+		/* border: 1px solid purple; */
 		/* align-self: stretch; */
 	}
  .box:active {

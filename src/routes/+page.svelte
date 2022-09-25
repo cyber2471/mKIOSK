@@ -91,7 +91,7 @@
 	}; */
 
 function goPage() {
-  location.href = "/main"
+  location.href = "/typeA"
 }
 
 import VIDEO from "$lib/assets/Woman.mp4";
