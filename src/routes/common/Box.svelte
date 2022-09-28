@@ -58,8 +58,8 @@ import Coffee from "$lib/assets/coffee001.png"
 		/* width: var(--width); */
 		display: grid;
 		grid-template-rows: repeat(3, 1fr); 
-		width: 85px;
-		height: 120px;
+		width: 80px;
+		height: 110px;
 		/* border: 1.5px solid #aaa; */
 		border-radius: 2px;
 		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
@@ -74,7 +74,7 @@ import Coffee from "$lib/assets/coffee001.png"
 		border-radius: 10px 10px;
 		background: transparent;
 		cursor: pointer;
-		/* border: 1px solid purple; */
+		border: 1px solid purple;
 		/* align-self: stretch; */
 	}
  .box:active {
@@ -82,7 +82,7 @@ import Coffee from "$lib/assets/coffee001.png"
 	/* margin-top: 3px; */
 	box-shadow: none;
 	position: relative;
-	background-color: rgb(250, 244, 250);
+	background-color: rgb(245, 209, 245);
  }
 	/* img { width:var(--width); height: var(--height); } */
 </style>

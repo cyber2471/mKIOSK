@@ -1,15 +1,8 @@
-
 <script>
-// import { setContext, getContext } from 'svelte'
-import { db, Storage } from "../common/DataStore"
+	import { db } from "../common/DataStore"
+	import Box from "../common/Box.svelte";
+	import Coffee from "$lib/assets/coffee001.png"
 
-	let foo = 'baz'
-	let bar = 'qux'
-	let result = ''
-	let title = ''
-	let content = ''
-	let status = ''
-	
 	let goods = [
 		{ name:'아메리카노',   price:3500, img:'' },
 		{ name:'카페라떼',     price:4000, img:'' },
@@ -22,29 +15,7 @@ import { db, Storage } from "../common/DataStore"
 		{ name:'미친쉐이크',   price:500,  img:'' },	
 		{ name:'졸라쉐이크',   price:500,  img:'' },
 	
-
 	];
-
-/* 	async function doPost () {
-		const res = await fetch('https://httpbin.org/post', {
-			method: 'POST',
-			body: JSON.stringify({
-				foo,
-				bar
-			})
-		}) 
-		
-		const json = await res.json()
-		result = JSON.stringify(json)
-	}
-
-    export function GET(event) {
-
-  return json({
-    // retrieve a specific header
-    userAgent: event.request.headers.get('user-agent')
-  });
-} */
 
 function AddComma(num)             
 {                
@@ -68,6 +39,7 @@ async function fvSelected(name, qty, price) {
 				drizzle: {caramel:{less:0, medium:0, more:0 }, chocolate: {less:0, medium:0, more:0 }}
 			   }, 
 		gPrice:price, 
+		uPrice:price,
 		ctime:'20220921121212', 
 		utime:'20220921121212', 
 		userid:'cyberpark', 
@@ -83,57 +55,37 @@ async function fvSelected(name, qty, price) {
   }
 
 //   console.log(id)
-}
+}	
+ </script>
 
-
-import Box from "../common/Box.svelte";
-import Coffee from "$lib/assets/coffee001.png"
-
-</script>
-
-<!-- <main> -->
-<!-- <input bind:value={foo} />
-<input bind:value={bar} />
-<button type="button" on:click={doPost}>
-	Post it.
-</button>
-<p>
-	Result:{result}
-</p> -->
-
-<!-- </main> -->
-
-
-<!-- <ListView --width="100px" --height="150px"></ListView> -->
-  <div class="container">
+<div class="container">
 	<div class="itemList">
 	{#each goods as {name, price, img}, idx}
 		<Box>
-			<!-- <center on:click={() => fvSelected( name, 1, price)}> -->
+			<center >
 				<div on:click={() => fvSelected( name, 1, price)}>
-					<img  width=60px height=85px src={Coffee} alt="download icon"/>
+					<img  width=65px height=85px src={Coffee} alt="download icon"/>
 				</div>
 				<div class="name">{name}</div>
 				<div class="price">￦{AddComma(price)}</div>
-			<!-- </center> -->
+			</center>
 		</Box>	
 	{/each} 
 	</div>
   </div>
-<!-- <ListView></ListView>
 
-<ListView></ListView> -->
-
-<style>
+  <style>
 	.container {
-		/* padding-top: 20px; */
+		padding-top: 10px;
 		display: grid;
+		width: 100%;
+		margin: auto;
 		/* grid-template-columns: repeat(1, 1fr); */
 		/* grid-template-columns: 2fr 1fr;  */
 		/* column-gap: 10px; */
 		/* align-self:flex-end; */
 		margin: 0px 0px 0px 0px;
-		/* border: 1px solid red; */
+		/* border: 1px solid blue; */
 	}
 
 	.itemList {
@@ -142,24 +94,26 @@ import Coffee from "$lib/assets/coffee001.png"
 		margin: auto;
 		text-align: center;
 		justify-content: center;
-		grid-template-columns: repeat(2, 1fr); 
+		grid-template-columns: repeat(3, 1fr); 
 		/* grid-template-columns: 2fr 1fr;  */
-		column-gap: 3px;
+		column-gap: 10px;
+		row-gap: 10px;
 		/* align-self:flex-end; */
-		/* border: 1px solid black; */
+		/* border: 1px solid red; */
 	}
 
 	.name {
 		font-size: 12px;
 		line-height: 10px;
-		/* margin: auto; */
+		margin: auto;
 		/* border: 1px solid red; */
     }
     .price {
  		font-size: 12px;
 		 line-height: 10px;
-		 /* margin: auto; */
+		 margin: auto;
 		 /* border: 1px solid blue; */
 	 }
 		/* img { width:var(--width); height: var(--height); } */
 	</style>
+
