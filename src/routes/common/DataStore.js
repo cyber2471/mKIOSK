@@ -1,16 +1,34 @@
-import { DBStore } from './DataUtils';
+// import { DBStore } from './DataUtils';
 import Dexie from 'dexie';
 
 export const db = new Dexie('myDatabase');
 
 db.version(1).stores({
     orderList: '++id, gName, gAttr, gQty, gPrice, ctime, utime, userid, remark', // Primary key and indexed props
+    gMeatadata: '++id, order_item, order_qty, order_amount, total_del, cash, card, menu, qty, price, screen_title',
+    mgoodstb: '++id, name, price, img',
   });
-
-db.version(1).stores({
-  gMeatadata: '++id, order_item, order_qty, order_amount, total_del, cash, card, menu, qty, price, screen_title',
-});
  
+let goods = [
+  { name:'아메리카노',   price:2000, img:'' },
+  { name:'카페라떼',     price:2700, img:'' },
+  { name:'카푸치노',     price:4000, img:'' },
+  { name:'딸기라떼',   price:3500, img:'' },
+  { name:'오렌지에이드', price:4500, img:'' },
+  { name:'흑당버블라떼', price:3500, img:'' },
+  { name:'흑당라떼',   price:3000, img:'' },
+  { name:'흑당버블그린티',   price:3800, img:'' },
+  { name:'흑당밀크티라떼',   price:3300,  img:'' },	
+  { name:'졸라쉐이크',   price:500,  img:'' },
+  { name:'스페셜티',     price:500,  img:'' },
+  { name:'콜드브루',     price:500,  img:'' },
+  { name:'콜드브루라떼', price:500,  img:'' },
+];
+
+db.on("populate", () => {
+  db.mgoodstb.bulkAdd(goods);
+});  
+
 let szText = [];
 
 szText[0] = {order_item:'주문내역', order_qty:'주문수량', order_amount:'주문금액', 
@@ -57,4 +75,4 @@ db.raindrops.bulkAdd(drops).then(function(lastKey) {
 
 // }
 
-export const Storage = DBStore('orderList', []); 
+// export const Storage = DBStore('orderList', []); 

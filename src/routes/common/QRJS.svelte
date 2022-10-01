@@ -30,8 +30,8 @@
   
   <style>
     #qrcode {
-      width:20px;
-      height:200x;
+      width:100px;
+      height:100px;
       margin-top:0px;
     }
   </style>

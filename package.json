@@ -31,6 +31,7 @@
 		"graphql": "^16.6.0",
 		"graphql-request": "^5.0.0",
 		"konsta": "^1.0.2",
-		"svelte-qrcode": "^1.0.0"
+		"svelte-qrcode": "^1.0.0",
+		"swiper": "^8.4.2"
 	}
 }

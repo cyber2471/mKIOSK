@@ -1,22 +1,17 @@
 <script>
   import '../../app.css';
-  import { db } from "../common/DataStore"
+  import { App } from 'konsta/svelte';
+  import { db, Storage } from "../common/DataStore"
   import { liveQuery } from "dexie"
-  import QRCode from "../common/QRJS.svelte";
 
   import {
-    App,
     useTheme,
     Page,
     Navbar,
-    Tabbar,
-    TabbarLink,
-    // Stepper,
-    // NavbarBackLink,
-    Popup,
+    NavbarBackLink,
     Panel,
     Block,
-    // BlockTitle,
+    BlockTitle,
     Link,
     Button, 
     // Segmented,
@@ -25,11 +20,21 @@
 
   let leftPanelOpened = false;
   let rightPanelOpened = false;
- 
+  let leftFloatingPanelOpened = false;
+  let rightFloatingPanelOpened = false;
+
   let total_qty = 0;
-  let total_amounts = 0;
-  let popupOpened = false;
-  
+  let amounts = 0;
+  let dupOrderList;
+
+  let theme;
+  theme = useTheme((newValue) => {
+    // to keep it reactive, update value on theme update in parent components
+    theme = newValue;
+  });
+
+  console.log(theme); // -> 'ios'
+
 $: orderList = liveQuery(async () => {
     //
     // Query Dexie's API
@@ -42,23 +47,13 @@ $: orderList = liveQuery(async () => {
        //dupOrderList = orderList;
 
       let szQty = orderList.map((item) => item.gQty)
-      let szPrice = orderList.map((item) => item.gPrice)
-      
+     
      //  console.log("szQty:",szQty.length)
       if (szQty.length > 0) 
       {
         szQty.reduce((PrevVal, Currval) => PrevVal + Currval)
         total_qty = szQty.reduce((sum, cur) => sum + cur )
-
-        szPrice.reduce((PrevVal, Currval) => PrevVal + Currval)
-        total_amounts = szPrice.reduce((sum, cur) => sum + cur )
       }
-      else
-      {
-        total_qty = 0;
-        total_amounts = 0;
-      }
-
 
     return  await orderList
       ;
@@ -74,42 +69,25 @@ $: orderList = liveQuery(async () => {
       return;
     }
 
-    let bConfirm = confirm("모두 삭제하시겠습니까?")
+    let bConfirm = confirm("삭제하시겠습니까?")
     // console.log("proc_fg:",bConfirm)
     if (bConfirm) {
 
       const bclear = await db.orderList.clear()
-        .then((resp) => {total_qty = 0; total_amounts = 0; })
+        .then((resp) => total_qty = 0)
         .catch((err) => console.log(err))
     }
   }
 
-  async function orderDel(idx, Name)
+  async function orderDel(idx)
   {
-    // await db.orderList.where(indexId).equals(indexValue).delete();
-    // await db.orderList.where(['id']).equals([idx]).delete();
-    // const bDelete = await db.orderList.delete(idx)
-
-    // idx = parseInt(idx);
-    // idx = 755;
-    console.log("key value:",idx)
-
-    // const bDelete = await db.orderList.delete(idx)
-    //     .then((resp) => console.log("success!!"))
-    //     .catch((err) => console.log(err))
-
-    // const bDelete = await db.orderList.where('id').equals(idx).delete()
+    console.log("order delete",idx) 
     const bDelete = await db.orderList.delete(idx)
-      .then((resp) => console.log("success!!"))
-      .catch((err) => console.log(err))
+        .then((resp) => console.log("success!!"))
+        .catch((err) => console.log(err))
 
+    console.log("delete fg:", bDelete)
   }
-
-  function AddComma(num)             
-  {                
-    var regexp = /\B(?=(\d{3})+(?!\d))/g;                
-    return num.toString().replace(regexp, ',');            
-  } 
 
   function orderOption(idx)
   {
@@ -134,25 +112,8 @@ $: orderList = liveQuery(async () => {
 
 // console.log(openRequest);
 
-function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
-
-  let nQty = curQty + nextQty;
-
-  if (nQty == 0)
-  {
-    alert('최소수량입니다.')
-    return;
-  }
-
-  let nPrice = curPrice + (uPrice * nextQty);
-
-  const bDelete = db.orderList.update(idx, {
-        "gQty": nQty,
-        "gPrice": nPrice
-      })
-      .then((resp) => console.log("success!!"))
-      .catch((err) => console.log(err))
-
+function orderChange(num) {
+  order_qty += num;
 }
 
   function goPath(param)
@@ -174,11 +135,12 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
   import CHA from "$lib/assets/CHA.png"
   import DEL from "$lib/assets/delete.png"
   import OPT from "$lib/assets/option.png"  
-    import { identity } from 'svelte/internal';
 
   let size = 'Default';
   let isTransparent = false;
 </script>
+
+
 
   <Page >
       <Navbar 
@@ -188,23 +150,10 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
       medium={size === 'Medium'}
       large={size === 'Large'}
       transparent={isTransparent}
+      style="height:70px"
       >
-      <Tabbar 
-    class="left-0 bottom-0 fixed">
-  <div class="tab-body">
-    <div class="tab-title">
-      <div class="tab-qty-title">총수량</div>
-      <div class="tab-qty">{total_qty}</div>
-      <div class="tab-amounts-title">총금액</div>
-      <div class="tab-amounts">{AddComma(total_amounts)}</div>
-    </div>
-    <div class="tab-order" on:click={() => (popupOpened = true)}>주문</div>
-    <div class="tab-delete" on:click={clearItems}>삭제</div>
-  </div>
-  </Tabbar>
-
     <Block class="flex space-x-1">
-      <Button onClick={() => (leftPanelOpened = true)}>기타</Button>
+      <Button onClick={() => (leftPanelOpened = true)}>분류</Button>
       <Button onClick={() => (rightPanelOpened = true)}>내역</Button>
       <Button onClick={clearItems}>삭제</Button>
     </Block>
@@ -217,7 +166,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     onBackdropClick={() => (leftPanelOpened = false)}
   >
     <Page>
-      <Navbar title="분류 및 검색">
+      <Navbar title="분류">
         <Link slot="right" navbar onClick={() => (leftPanelOpened = false)}>
           Close
         </Link>
@@ -229,11 +178,11 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
   </Panel>
 
   <Panel
-  side="left"
+  side="right"
   size="w-60 h-screen"
   opened={rightPanelOpened}
   onBackdropClick={() => (rightPanelOpened = false)}
-  >
+>
   <Page>
     <Navbar title="주문내역">
       <Link slot="right" navbar onClick={() => (rightPanelOpened = false)}>
@@ -245,15 +194,15 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
         <!-- <div class="orderTitle">{szText[nation_flag].order_item}</div> -->
         <div class="orderDetail">
           {#if $orderList}
-          {#each $orderList as order (order.id)} 
+          {#each $orderList as order, idx} 
           <div class="itemRows">
             <div class="itemList">{order.gName}</div>
             <div class="itemEtc">
-              <div class="itemCell"><img style="width:17px;cursor:pointer" src={OPT} alt='KOR' on:click={()=>orderOption(order.id)}/></div>
-              <div class="minus" on:click={() => orderUpdate(order.id,order.gQty,-1,order.gPrice,order.uPrice)}>-</div>
-              <div class="">{order.gQty}</div>
-              <div class="plus" on:click={() => orderUpdate(order.id,order.gQty,1,order.gPrice,order.uPrice)}>+</div>
-              <div class="itemCell"><img style="width:17px;cursor:pointer" src={DEL} alt='KOR' on:click={()=>orderDel(order.id)}/></div>
+              <div><img style="width:17px;cursor:pointer" src={OPT} alt='KOR' on:click={()=>orderOption(idx)}/></div>
+              <div class=" btn-outline-primary" on:click={() => orderChange(-1)}>-</div>
+              <div>{order_qty}</div>
+              <div class=" btn-outline-danger" on:click={() => orderChange(1)}>+</div>
+              <div><img style="width:17px;cursor:pointer" src={DEL} alt='KOR' on:click={()=>orderDel(idx)}/></div>
             </div>
           </div>
           {/each}   
@@ -263,44 +212,13 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     </Block>
   </Page>
 </Panel>
+
     <!-- <BlockTitle>Strong Inset Outline Block</BlockTitle> -->
-      <Block margin>
+      <Block strong inset outline>
         <App theme="material">
           <slot />
         </App>
       </Block>
-
-      <Popup opened={popupOpened} onBackdropClick={() => (popupOpened = false)}>
-        <Page>
-          <Navbar title="QR Code">
-            <Link slot="right" navbar onClick={() => (popupOpened = false)}>
-              Close
-            </Link>
-          </Navbar>
-          <Block class="space-y-4">
-            <div class="QR-display">
-              <div>
-                <QRCode style="width:500px" codeValue="https://cdae-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
-              </div>
-              <div class="QR-text">
-               <center>[ 주문결제용 QR코드 ] </center>
-                다음 절차에 따라 KIOSK를<br>
-                통해 결제하시면 됩니다.
-              </div>
-            </div>
-
-<pre>
-1. KIOSK상단의 QR결제(주문결제용)를 선택
-2. QR코드 스캐너에 생성된 QR코드 인식
-3. 인식된 QR코드의 해당 주문내역 확인
-4. 포인트 및 결제수단을 선택하여 결제처리
-   ( 결제전 메뉴의 추가나 변경가능 )
-</pre>
-
-          </Block>
-        </Page>
-      </Popup>
-
 </Page> 
 
 
@@ -326,97 +244,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
   }
 
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
-  .QR-display {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    /* border: 1px solid red; */
-  }
 
-  .QR-text {
-    text-align: left;
-    padding: 20px 0px 0px 10px;
-    /* margin-left: 10px; */
-  }
-  .minus {
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-    background-color: rgb(236, 236, 233);
-    font-family: 'Nanum Myeongjo', serif; 
-    cursor: pointer;
-    border-radius: 8px;
-  }
-  .plus {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    background-color: rgb(236, 236, 233);
-    font-family: 'Nanum Myeongjo', serif; 
-    cursor: pointer;
-    border-radius: 8px;
-  }
-  .tab-title {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    text-align: center;
-  }
-  .tab-body {
-    width:100%;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    column-gap: 4px;
-    /* border: 1px solid red; */
-    padding: 2px;
-  }
-  .tab-qty-title {
-    /* border: 1px solid blue; */
-
-		/* transition-duration: 0.1s; */
-  }
-  .tab-amounts-title {
-    /* border: 1px solid blue; */
-
-		/* transition-duration: 0.1s; */
-  }
-  .tab-qty {
-    /* border: 1px solid blue; */
-    text-align: right;
-    padding-right: 10px;
-		/* transition-duration: 0.1s; */
-  }
-  .tab-amounts {
-    /* border: 1px solid blue; */
-    text-align: right;
-    padding-right: 10px;
-		/* transition-duration: 0.1s; */
-  }
-  .tab-order {
-    /* border: 1px solid blue; */
-    line-height: 50px;
-    text-align: center;
-    background-color: rgb(255,193,7);
-    font-family: 'Nanum Myeongjo', serif; 
-    cursor: pointer;
-    /* color: whitesmoke; */
-    font-size: 15px;
-    border-radius: 10px;
-		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
-		/* transition-duration: 0.1s; */
-  }
-
-  .tab-delete {
-    /* border: 1px solid blue; */
-    cursor: pointer;
-    line-height: 50px;
-    text-align: center;
-    background-color: rgb(25,135,84);
-    font-family: 'Nanum Myeongjo', serif; 
-    font-size: 15px;
-    color: whitesmoke;
-    border-radius: 10px;
-		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
-		/* transition-duration: 0.1s; */
-  }
     .button-plus {
     width: 20px;
     height: 20px;
@@ -486,23 +314,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 		/* border: 1px solid red; */
     /* border: 1px 1px 1px 1px inset rgb(228, 8, 8);  */
 	}
-  .itemCell {
-		/* padding-top: 20px; */
-		/* display: grid; */
-		/* margin: auto; */
-    padding: 13px 1px 1px 0px;
-		text-align: center; 
-    vertical-align: middle;
-		/* justify-content: center; */
-		/* grid-template-rows: repeat(15, 1fr);  */
-		/* grid-template-columns: repeat(5, 1fr);  */
-    /* line-height: 35px; */
-    /* background-color: rgb(236, 236, 229); */
-    /* font-size: 13px; */
-    /* font-family: 'Nanum Myeongjo', serif;   */
-		/* align-self:flex-end; */
-		/* border: 1px inset rgb(235, 230, 230);  */
-	}
+
   .itemEtc {
 		/* padding-top: 20px; */
 		display: grid;
@@ -521,7 +333,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
 	.itemList {
 		/* padding-top: 20px; */
-		/* display: grid; */
+		display: grid;
 		/* margin: auto; */
 		text-align: left; 
 		/* justify-content: center; */
@@ -529,7 +341,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 		/* grid-template-columns: repeat(4, 1fr);  */
     padding: 2px 0px 0px 5px;
     font-family: 'Nanum Myeongjo', serif; 
-    font-size: 15px;
+    font-size: 12px;
     line-height: 35px;
     /* background-color: rgb(236, 236, 229); */
 		/* align-self:flex-end; */

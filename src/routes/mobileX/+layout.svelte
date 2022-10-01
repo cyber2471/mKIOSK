@@ -2,6 +2,8 @@
   import '../../app.css';
   import { db } from "../common/DataStore"
   import { liveQuery } from "dexie"
+  import Box from "../common/Box.svelte";
+  import Coffee from "$lib/assets/coffee001.png"
   import QRCode from "../common/QRJS.svelte";
 
   import {
@@ -118,21 +120,6 @@ $: orderList = liveQuery(async () => {
 
   let order_qty = 1;
   let nation_flag = 0;
-  let szText = [];
-
-  szText[0] = {order_item:'주문내역', order_qty:'주문수량', order_amount:'주문금액', 
-               total_del:'전체삭제', cash:'현금결제', card:'카드결제', ordered:'주문하기',
-               menu:'메뉴', qty:'수량', price:'가격', screen_title:'처음으로'}
-  szText[1] = {order_item:'lịch sử đơn hàng', order_qty:'đặt hàng số lượng', order_amount:'số lượng đơn đặt hàng',
-               total_del:'Xóa tất cả', cash:'tiền mặt', card:'Tín dụng thẻ', ordered:'đặt hàng',
-               menu:'thực đơn', qty:'lượng hàng', price:'giá bán', screen_title:'Giới thiệu'}
-  szText[2] = {order_item:'ORDER ITEMS', order_qty:'ORDER QTY', order_amount:'ORDER AMOUNTS',
-               total_del:'Delete all', cash:'cash', card:'card', ordered:'place an order',
-               menu:'Menu items', qty:'Qty', price:'Price', screen_title:'Intro'}
-
-  // console.log(szText[nation_flag])
-
-// console.log(openRequest);
 
 function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
@@ -165,6 +152,48 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
     nation_flag = param;
   }
+
+   $: mgoodstb = liveQuery( async () => {
+
+     const objGoods = await db.mgoodstb
+      // .where('age')
+      // .between(minAge, maxAge)
+      .toArray();
+
+       return  await objGoods;
+  });
+
+  async function fvSelected(name, qty, price) {
+
+//   alert('11')
+  try {
+    // Add the new friend!
+    const id = await db.orderList.add({
+		gName:name, 
+		gQty:qty,
+		gAttr: {shot:'0', size:{tall:'0', grande:'0', vanti:'0'}, decaf:{decaf:'0', half_decaf:'0'}, 
+		        cup:{single_use:'0', mug_cup:'0', personal_cup:'0'}, syrup:{vanila:'0', hazelnut:'0', caramel:'0'},
+                whipping: {nomal_whipping:{less:0, medium:0, more:0 }, espreso_whipping:{less:0, medium:0, more:0 }},
+				drizzle: {caramel:{less:0, medium:0, more:0 }, chocolate: {less:0, medium:0, more:0 }}
+			   }, 
+		gPrice:price, 
+		uPrice:price,
+		ctime:'20220921121212', 
+		utime:'20220921121212', 
+		userid:'cyberpark', 
+		remark:''
+    });
+
+    status = `gMeatadata successfully added. Got id ${id}`;
+    
+    // Reset form:
+
+  } catch (error) {
+    status = `Failed to add ${gName}: ${error}`;
+  }
+
+//   console.log(id)
+}	
 
   import Logo from "$lib/assets/logo.png"
   import KOR from "$lib/assets/KOR.png"
@@ -266,7 +295,30 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     <!-- <BlockTitle>Strong Inset Outline Block</BlockTitle> -->
       <Block margin>
         <App theme="material">
-          <slot />
+
+
+  <div class="container">
+    <div class="itemGrid">
+    {#if $mgoodstb}
+    {#each $mgoodstb as {name, price}}
+      <Box>
+        <center>
+          <div on:click={() => fvSelected( name, 1, price)}>
+            <img  width=65px height=85px src={Coffee} alt="download icon"/>
+          </div>
+          <div class="name">{name}</div>
+          <div class="price">￦{AddComma(price)}</div>
+        </center>
+      </Box>	
+    {/each} 
+    {:else}
+      cyberpark
+    {/if}
+
+    </div>
+  </div>
+
+
         </App>
       </Block>
 
@@ -280,10 +332,10 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
           <Block class="space-y-4">
             <div class="QR-display">
               <div>
-                <QRCode style="width:500px" codeValue="https://cdae-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
+                <QRCode style="width:500px" codeValue="https://cdae-125-129-62-2.jp.ngrok.io/mobileX" squareSize=500/>
               </div>
               <div class="QR-text">
-               <center>[ 주문결제용 QR코드 ] </center>
+               <p class="center">[ 주문결제용 QR코드 ] </p>
                 다음 절차에 따라 KIOSK를<br>
                 통해 결제하시면 됩니다.
               </div>
@@ -790,12 +842,57 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     }
 
     center {
-      border-bottom: 1px solid lightgray;
+      /* border-bottom: 1px solid lightgray; */
       vertical-align: middle;
+    }
+
+    .center {
+      border-bottom: 1px solid lightgray;
+      text-align: center;
     }
 
     .hline {
       border-bottom: 1px solid lightgray;
       vertical-align: middle;
     }
+
+    .container {
+		padding-top: 10px;
+		display: grid;
+		width: 100%;
+		margin: auto;
+		/* grid-template-columns: repeat(1, 1fr); */
+		/* grid-template-columns: 2fr 1fr;  */
+		/* column-gap: 10px; */
+		/* align-self:flex-end; */
+		margin: 0px 0px 0px 0px;
+		/* border: 1px solid blue; */
+	}
+
+	.itemGrid {
+		/* padding-top: 20px; */
+		display: grid;
+		margin: auto;
+		text-align: center;
+		justify-content: center;
+		grid-template-columns: repeat(3, 1fr); 
+		/* grid-template-columns: 2fr 1fr;  */
+		column-gap: 10px;
+		row-gap: 10px;
+		/* align-self:flex-end; */
+		/* border: 1px solid red; */
+	}
+
+	.name {
+		font-size: 12px;
+		line-height: 10px;
+		margin: auto;
+		/* border: 1px solid red; */
+    }
+    .price {
+ 		font-size: 12px;
+		 line-height: 10px;
+		 margin: auto;
+		 /* border: 1px solid blue; */
+	 }
 </style>
