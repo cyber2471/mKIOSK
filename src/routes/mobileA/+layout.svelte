@@ -18,7 +18,9 @@
     Popup,
     Panel,
     Block,
-    // BlockTitle,
+    BlockTitle,
+    List,
+    ListInput,
     Link,
     Button, 
     // Segmented,
@@ -31,6 +33,7 @@
   let total_qty = 0;
   let total_amounts = 0;
   let popupOpened = false;
+  let searchName;
   
 $: orderList = liveQuery(async () => {
     //
@@ -66,6 +69,10 @@ $: orderList = liveQuery(async () => {
       ;
   });
 
+  function fvPayments() {
+    alert('미개발 내역입니다.')
+  }
+
   async function clearItems() {
 
     // alertOpened = true;
@@ -80,14 +87,14 @@ $: orderList = liveQuery(async () => {
     // console.log("proc_fg:",bConfirm)
     if (bConfirm) {
 
-      // const bclear = await db.orderList.clear()
-      //   .then((resp) => {total_qty = 0; total_amounts = 0; })
-      //   .catch((err) => console.log(err))
+      const bclear = await db.orderList.clear()
+         .then((resp) => {total_qty = 0; total_amounts = 0; })
+         .catch((err) => console.log(err))
 
-      const bclear = await db.delete()
+      const bDel = await db.delete()
           .then(() => db.open())
 
-      console.log("db open:",bclear)
+      console.log("db open:",bDel)
     }
   }
 
@@ -160,7 +167,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
    $: mgoodstb = liveQuery( async () => {
 
-    const searchName = ""
+    // const searchName = ""
     const regex = new RegExp(searchName)
  
     const objGoods = await db.mgoodstb
@@ -207,15 +214,35 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 //   console.log(id)
 }	
 
-  import Logo from "$lib/assets/logo.png"
-  import KOR from "$lib/assets/KOR.png"
-  import JAN from "$lib/assets/JAN.png"
-  import VTM from "$lib/assets/VTM.png"
-  import USA from "$lib/assets/USA.png"
-  import CHA from "$lib/assets/CHA.png"
+function fvSearching() {
+  console.log(name.value)
+  searchName = name.value
+  leftPanelOpened = false;
+}
+
+let name = { value: '', changed: false };
+  let demoValue = '';
+
+const onNameChange = (e) => {
+  name = { value: e.target.value, changed: true };
+};
+
+  const onDemoValueChange = (e) => {
+    demoValue = e.target.value;
+  };
+  const onDemoValueClear = () => {
+    demoValue = '';
+  };
+
+  // import Logo from "$lib/assets/logo.png"
+  // import KOR from "$lib/assets/KOR.png"
+  // import JAN from "$lib/assets/JAN.png"
+  // import VTM from "$lib/assets/VTM.png"
+  // import USA from "$lib/assets/USA.png"
+  // import CHA from "$lib/assets/CHA.png"
   import DEL from "$lib/assets/delete.png"
   import OPT from "$lib/assets/option.png"  
-    import { identity } from 'svelte/internal';
+  // import { identity } from 'svelte/internal';
 
   let size = 'Default';
   let isTransparent = false;
@@ -239,7 +266,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
       <div class="tab-amounts-title">총금액</div>
       <div class="tab-amounts">{AddComma(total_amounts)}</div>
     </div>
-    <div class="tab-order" on:click={() => (popupOpened = true)}>주문</div>
+    <div class="tab-order" on:click={() => (popupOpened = true)}>QR주문</div>
     <div class="tab-delete" on:click={clearItems}>삭제</div>
   </div>
   </Tabbar>
@@ -247,7 +274,7 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     <Block class="flex space-x-1">
       <Button onClick={() => (leftPanelOpened = true)}>기타</Button>
       <Button onClick={() => (rightPanelOpened = true)}>내역</Button>
-      <Button onClick={clearItems}>삭제</Button>
+      <Button onClick={fvPayments}>결제</Button>
     </Block>
     </Navbar>
 
@@ -264,6 +291,26 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
         </Link>
       </Navbar>
       <Block class="space-y-4">
+
+
+
+        <!-- <BlockTitle>Outline + Floating Labels</BlockTitle> -->
+        <List strongIos insetIos>
+          <ListInput
+            outline
+            label="상품명 검색"
+            floatingLabel
+            type="text"
+            value={name.value}
+            onInput={onNameChange}
+            placeholder="검색어 입력"
+          >
+          </ListInput>
+            <center>
+               <Button style="width:160px" onClick={() => (fvSearching())}>검색</Button>
+            </center>
+        </List>
+
 
       </Block>
     </Page>
@@ -355,8 +402,11 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
 <pre>
 1. KIOSK상단의 QR결제(주문결제용)를 선택
-2. QR코드 스캐너에 생성된 QR코드 인식
-3. 인식된 QR코드의 해당 주문내역 확인
+2. 예약주문내역의 예약명을 확인하고 선택 
+   또는 QR코드결제 버튼 클릭 후 QR코드 
+   스캐너에 생성된 QR코드 인식
+3. 선택된 예약주문 또는 인식된 QR코드의 
+   상세 주문내역을 확인
 4. 포인트 및 결제수단을 선택하여 결제처리
    ( 결제전 메뉴의 추가나 변경가능 )
 </pre>
