@@ -1,81 +1,30 @@
-<div class="solo-demo-container solo-container">
-  <Paper class="solo-paper" elevation={6}>
-    <Icon class="material-icons">search</Icon>
-    <Input
-      bind:value
-      on:keydown={handleKeyDown}
-      placeholder="Search"
-      class="solo-input"
-    />
-  </Paper>
-  <Fab
-    on:click={doSearch}
-    disabled={value === ''}
-    color="primary"
-    mini
-    class="solo-fab"
-  >
-    <Icon class="material-icons">arrow_forward</Icon>
-  </Fab>
-</div>
+<script>
+// 1. 아임포트 REST API 호출에 필요한 모듈을 불러옵니다.
+import { Iamport, Request, Enum } from 'iamport-rest-client-nodejs';
+const { Banks } = Request;
+const { BankCodeEnum } = Enum; 
 
-<pre class="status">Value: {value}</pre>
+// 2. 아임포트 객체를 생성합니다. 귀하의 API 정보는 아임포트 관리자페이지 > 시스템설정 > 내정보를 참고해주세요.
+const iamport = new Iamport({
+  apiKey: '1437563852368337', 
+  apiSecret: 'pWeBTRP5dvDi005DJu0lcFd1XVM7bzWeU34PwuvgMwGBCD5YBpxtTRBo2bDzhN4KKUyM5X04heL55BgW',
+});
 
-<script lang="ts">
-  import { Input } from '@smui/textfield';
-  import Paper from '@smui/paper';
-  import Fab from '@smui/fab';
-  import { Icon } from '@smui/common';
+// EX1. 모든 은행 정보를 조회합니다.
+const getBanks = Banks.getBanks();
+getBanks.request(iamport)
+.then(response => console.log('response: ', response.data))
+.catch(error => console.log('error: ', error.response.data));
 
-  let value = '';
+// EX2. 특정 은행 정보를 조회합니다.
+const getBank = Banks.getBank({
+  code: BankCodeEnum.SC,
+});
 
-  function doSearch() {
-    alert('Search for ' + value);
-  }
-
-  function handleKeyDown(event: CustomEvent | KeyboardEvent) {
-    event = event as KeyboardEvent;
-    if (event.key === 'Enter') {
-      doSearch();
-    }
-  }
+async function callBank() {
+await getBank.request(iamport)
+.then(response => console.log('response: ', response.data))
+.catch(error => console.log('error: ', error.response.data));
+}
 </script>
 
-<style>
-  .solo-demo-container {
-    padding: 36px 18px;
-    background-color: var(--mdc-theme-background, #f8f8f8);
-    border: 1px solid
-      var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.1));
-  }
-
-  .solo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  * :global(.solo-paper) {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 600px;
-    margin: 0 12px;
-    padding: 0 12px;
-    height: 48px;
-  }
-  * :global(.solo-paper > *) {
-    display: inline-block;
-    margin: 0 12px;
-  }
-  * :global(.solo-input) {
-    flex-grow: 1;
-    color: var(--mdc-theme-on-surface, #000);
-  }
-  * :global(.solo-input::placeholder) {
-    color: var(--mdc-theme-on-surface, #000);
-    opacity: 0.6;
-  }
-  * :global(.solo-fab) {
-    flex-shrink: 0;
-  }
-</style>
