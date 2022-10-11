@@ -9,6 +9,7 @@
 	},
 	"devDependencies": {
 		"@beyonk/svelte-mapbox": "^8.1.4",
+		"@smui-extra/accordion": "^6.1.4",
 		"@smui/button": "^6.1.0",
 		"@smui/card": "^6.1.0",
 		"@smui/common": "^6.1.4",
@@ -34,7 +35,10 @@
 		"framework7-svelte": "^7.0.8",
 		"graphql": "^16.6.0",
 		"graphql-request": "^5.0.0",
+		"html5-qrcode": "^2.2.1",
 		"konsta": "^1.0.2",
+		"qrcode-scanner-svelte": "^1.0.0",
+		"svelte-material-ui": "^6.2.0",
 		"svelte-qrcode": "^1.0.0",
 		"swiper": "^8.4.2"
 	}

@@ -5,6 +5,8 @@
   import Box from "../common/Box.svelte";
   import Coffee from "$lib/assets/coffee001.png"
   import QRCode from "../common/QRJS.svelte";
+  import Accordion, { Header, Content } from '@smui-extra/accordion';
+  // import QrCode from "svelte-qrcode"
 
   import {
     App,
@@ -16,10 +18,13 @@
     // Stepper,
     // NavbarBackLink,
     Popup,
+    Popover,
     Panel,
     Block,
     BlockTitle,
     List,
+    ListItem,
+    ListButton,
     ListInput,
     Link,
     Button, 
@@ -35,6 +40,14 @@
   let popupOpened = false;
   let searchName;
   
+  let popoverOpened = false;
+  let popoverTargetEl = null;
+
+  const openPopover = (targetEl) => {
+    popoverTargetEl = targetEl;
+    popoverOpened = true;
+  };
+
 $: orderList = liveQuery(async () => {
     //
     // Query Dexie's API
@@ -46,7 +59,7 @@ $: orderList = liveQuery(async () => {
 
        //dupOrderList = orderList;
 
-      let szQty = orderList.map((item) => item.gQty)
+      let szQty = orderList.map((item) => item.gQty) 
       let szPrice = orderList.map((item) => item.gPrice)
       
      //  console.log("szQty:",szQty.length)
@@ -248,6 +261,13 @@ const onNameChange = (e) => {
   let isTransparent = false;
 </script>
 
+<svelte:head>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.min.css"
+  />
+</svelte:head>
+
   <Page >
       <Navbar 
        title="메뉴주문"
@@ -269,7 +289,7 @@ const onNameChange = (e) => {
     <div class="tab-order" on:click={() => (popupOpened = true)}>QR주문</div>
     <div class="tab-delete" on:click={clearItems}>삭제</div>
   </div>
-  </Tabbar>
+  </Tabbar> 
 
     <Block class="flex space-x-1">
       <Button onClick={() => (leftPanelOpened = true)}>기타</Button>
@@ -285,18 +305,20 @@ const onNameChange = (e) => {
     onBackdropClick={() => (leftPanelOpened = false)}
   >
     <Page>
-      <Navbar title="분류 및 검색">
+      <Navbar title="분류 및 검색" >
         <Link slot="right" navbar onClick={() => (leftPanelOpened = false)}>
           Close
         </Link>
       </Navbar>
-      <Block class="space-y-4">
+      <!-- <Block class="space-y-4"> -->
 
-
+        <!-- <List strongIos >
+          <ListItem class="Selected-Class" title="분류선택" header="선호하는 상품별" link onClick={() => openPopover('.Selected-Class')}/>
+        </List> -->
 
         <!-- <BlockTitle>Outline + Floating Labels</BlockTitle> -->
         <List strongIos insetIos>
-          <ListInput
+          <ListInput 
             outline
             label="상품명 검색"
             floatingLabel
@@ -312,7 +334,7 @@ const onNameChange = (e) => {
         </List>
 
 
-      </Block>
+      <!-- </Block> -->
     </Page>
   </Panel>
 
@@ -392,6 +414,7 @@ const onNameChange = (e) => {
             <div class="QR-display">
               <div>
                 <QRCode style="width:500px" codeValue="https://cdae-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
+                <!-- <QrCode style="width:500px" value="https://cdae-125-129-62-2.jp.ngrok.io/mobileA"/> -->
               </div>
               <div class="QR-text">
                <p class="center">[ 주문결제용 QR코드 ] </p>
@@ -414,6 +437,28 @@ const onNameChange = (e) => {
           </Block>
         </Page>
       </Popup>
+
+      <Popover style="width:200px"
+      opened={popoverOpened}
+      target={popoverTargetEl}
+      onBackdropClick={() => (popoverOpened = false)}
+    >
+      <List nested>
+        <ListItem title="Item 1" link onClick={() => (popoverOpened = false)} />
+        <ListItem
+          title="List Item 2"
+          link
+          onClick={() => (popoverOpened = false)}
+        />
+        <ListItem title="Item 3" link onClick={() => (popoverOpened = false)} />
+        <ListItem
+          title="List Item 4"
+          link
+          onClick={() => (popoverOpened = false)}
+        />
+        <ListItem title="Item 5" link onClick={() => (popoverOpened = false)} />
+      </List>
+    </Popover>
 
 </Page> 
 

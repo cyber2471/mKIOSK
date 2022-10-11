@@ -63,7 +63,7 @@ import Coffee from "$lib/assets/coffee001.png"
 		/* border: 1.5px solid #aaa; */
 		border-radius: 2px;
 		box-shadow: 3px 3px 2px rgba(0,0,0,0.1);
-		transition-duration: 0.1s;
+		transition-duration: 0.2s;
 		/* padding: 1em;  */
 		margin: 0 0 2px 0;
 		/* font-family: Arial, Helvetica, sans-serif; */
