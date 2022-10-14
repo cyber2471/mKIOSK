@@ -38,7 +38,6 @@
   console.log(...event.request.headers);
 
   return json({
-    // retrieve a specific header
     userAgent: event.request.headers.get('user-agent')
   });
 }
@@ -56,14 +55,7 @@ import Coffee from "$lib/assets/coffee001.png"
 </script>
 
 <main>
-<!-- <input bind:value={foo} />
-<input bind:value={bar} />
-<button type="button" on:click={doPost}>
-	Post it.
-</button>
-<p>
-	Result:{result}
-</p> -->
+
 
 </main>
 
@@ -79,17 +71,7 @@ import Coffee from "$lib/assets/coffee001.png"
 		</Box>	
 	{/each}
   </div>
-<!-- <ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView> -->
+
 
 <style>
 	.container {

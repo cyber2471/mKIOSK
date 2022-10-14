@@ -55,10 +55,9 @@ function AddComma(num)
 
 async function fvSelected(name, qty, price) {
 
-//   alert('11')
+
   try {
 
-    // Add the new friend!
     const id = await db.orderList.add({
 		gName:name, 
 		gQty:qty,
@@ -76,13 +75,11 @@ async function fvSelected(name, qty, price) {
 
     status = `gMeatadata successfully added. Got id ${id}`;
     
-    // Reset form:
 
   } catch (error) {
     status = `Failed to add ${gName}: ${error}`;
   }
 
-//   console.log(id)
 }
 
 
@@ -91,20 +88,6 @@ import Coffee from "$lib/assets/coffee001.png"
 
 </script>
 
-<!-- <main> -->
-<!-- <input bind:value={foo} />
-<input bind:value={bar} />
-<button type="button" on:click={doPost}>
-	Post it.
-</button>
-<p>
-	Result:{result}
-</p> -->
-
-<!-- </main> -->
-
-
-<!-- <ListView --width="100px" --height="150px"></ListView> -->
   <div class="container">
 	<div class="itemList">
 	{#each goods as {name, price, img}, idx}
@@ -118,9 +101,7 @@ import Coffee from "$lib/assets/coffee001.png"
 	{/each}
 	</div>
   </div>
-<!-- <ListView></ListView>
 
-<ListView></ListView> -->
 
 <style>
 	.container {

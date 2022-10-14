@@ -11,19 +11,14 @@
 
 
 $: orderList = liveQuery(async () => {
-    //
-    // Query Dexie's API
-    //
+
     const orderList = await db.orderList
       // .where('age')
       // .between(minAge, maxAge)
       .toArray();
 
-       //dupOrderList = orderList;
-
       let szQty = orderList.map((item) => item.gQty)
      
-     //  console.log("szQty:",szQty.length)
       if (szQty.length > 0) 
       {
         szQty.reduce((PrevVal, Currval) => PrevVal + Currval)
@@ -66,34 +61,7 @@ $: orderList = liveQuery(async () => {
   {
     console.log(idx)
   }
-  // $: friends = liveQuery(async () => {
-  //   const lowerNamePattern = namePattern.toLowerCase();
-  //   const collection =
-  //     orderBy === "age"
-  //       ? db.friends
-  //           // Let "age" index filter age criteria and sort
-  //           .where("age")
-  //           .between(minAge || 0, maxAge || Infinity, true, true)
-  //           // filter name criteria "manually":
-  //           .filter(friend =>
-  //             friend.name.toLowerCase().startsWith(lowerNamePattern)
-  //           )
-  //       : db.friends
-  //           // Let "name" index filter name and sort
-  //           .where("name")
-  //           .startsWithIgnoreCase(namePattern)
-  //           // Filter age criteria "manually":
-  //           .filter(friend => friend.age >= minAge && friend.age <= maxAge);
 
-  //   // Return a paged result:
-  //   return await collection
-  //     .offset(offset)
-  //     .limit(pageSize)
-  //     .toArray();
-  // });
-
-
-  // console.log("return value:",Storage.subscribe.name)
 
   let order_qty = 1;
   let nation_flag = 0;
@@ -109,9 +77,6 @@ $: orderList = liveQuery(async () => {
                total_del:'Delete all', cash:'cash', card:'card', ordered:'place an order',
                menu:'Menu items', qty:'Qty', price:'Price', screen_title:'Intro'}
 
-  // console.log(szText[nation_flag])
-
-// console.log(openRequest);
 
 function orderChange(num) {
   order_qty += num;
@@ -140,36 +105,6 @@ function orderChange(num) {
 
 </script>
 
-<!-- <ul>
-  {#if $orderList}
-    {#each $orderList as order (order.id)}
-      <li>{order.gName}, {order.gPrice}</li>
-    {/each}
-  {/if}
-</ul> -->
-<!-- 
-<div>
-  <p>{status}</p>
-  <fieldset>
-    <legend>Add new friend</legend>
-    <label>
-      Name:
-      <input
-          type="text"
-          bind:value={friendName} />
-    </label>
-    <br/>
-    <label>
-      Age:
-      <input
-        type="number"
-        bind:value={friendAge} />
-    </label>
-    <br />
-    <button on:click={addFriend}>Add Friend</button>
-  </fieldset>
-</div> -->
-
 <svelte:head>
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
@@ -179,10 +114,6 @@ function orderChange(num) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </svelte:head>
 
-<!--   <form on:submit|preventDefault={addNumber}>
-    <input  bind:value={n} />
-    <button type="submit">Add</button>
-    </form> -->
 
 <div class="orderMain">
     <div class="orderGuide">

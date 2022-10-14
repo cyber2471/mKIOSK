@@ -113,19 +113,9 @@ $: orderList = liveQuery(async () => {
 
   async function orderDel(idx, Name)
   {
-    // await db.orderList.where(indexId).equals(indexValue).delete();
-    // await db.orderList.where(['id']).equals([idx]).delete();
-    // const bDelete = await db.orderList.delete(idx)
 
-    // idx = parseInt(idx);
-    // idx = 755;
     console.log("key value:",idx)
 
-    // const bDelete = await db.orderList.delete(idx)
-    //     .then((resp) => console.log("success!!"))
-    //     .catch((err) => console.log(err))
-
-    // const bDelete = await db.orderList.where('id').equals(idx).delete()
     const bDelete = await db.orderList.delete(idx)
       .then((resp) => console.log("success!!"))
       .catch((err) => console.log(err))
@@ -186,20 +176,14 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
     const objGoods = await db.mgoodstb
       .filter (function (res) { return regex.test(res.name); })
       .toArray()
-      // .then(function(result) {
-      //    alert ("Found " + result.length + " friends containing the word '"+ searchName + "' in its name...");
-      // });
-
-      // console.log(objGoods)
 
         return  await objGoods;
   });
 
   async function fvSelected(name, qty, price) {
 
-//   alert('11')
   try {
-    // Add the new friend!
+
     const id = await db.orderList.add({
 		gName:name, 
 		gQty:qty,
@@ -218,13 +202,11 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 
     status = `gMeatadata successfully added. Got id ${id}`;
     
-    // Reset form:
 
   } catch (error) {
     status = `Failed to add ${gName}: ${error}`;
   }
 
-//   console.log(id)
 }	
 
 function fvSearching() {
@@ -413,7 +395,7 @@ const onNameChange = (e) => {
           <Block class="space-y-4">
             <div class="QR-display">
               <div>
-                <QRCode style="width:500px" codeValue="https://5d31-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
+                <QRCode style="width:500px" codeValue="https://7114-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
                 <!-- <QrCode style="width:500px" value="https://cdae-125-129-62-2.jp.ngrok.io/mobileA"/> -->
               </div>
               <div class="QR-text">

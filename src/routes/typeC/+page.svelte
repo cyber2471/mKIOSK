@@ -18,7 +18,7 @@
 		{ name:'졸라쉐이크',   price:500,  img:'' },
 	];
 
-	// console.log(content)
+
 
 	async function doPost () {
 		const res = await fetch('https://httpbin.org/post', {
@@ -34,11 +34,11 @@
 	}
 
     export function GET(event) {
-  // log all headers
+
   console.log(...event.request.headers);
 
   return json({
-    // retrieve a specific header
+
     userAgent: event.request.headers.get('user-agent')
   });
 }
@@ -55,17 +55,6 @@ import Coffee from "$lib/assets/coffee001.png"
 
 </script>
 
-<main>
-<!-- <input bind:value={foo} />
-<input bind:value={bar} />
-<button type="button" on:click={doPost}>
-	Post it.
-</button>
-<p>
-	Result:{result}
-</p> -->
-
-</main>
 
 <!-- <ListView --width="100px" --height="150px"></ListView> -->
   <div class="container">
@@ -79,17 +68,7 @@ import Coffee from "$lib/assets/coffee001.png"
 		</Box>	
 	{/each}
   </div>
-<!-- <ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView>
-<ListView></ListView> -->
+
 
 <style>
 	.container {

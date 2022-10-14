@@ -244,7 +244,7 @@ h1.sub-text {
 			<!-- <h1 class="sub-text">( 모바일주문을 원하시면 QR코드를 스캔하세요 )</h1> -->
 			<div class="qrcode">
 				<center>
-					<QRCode codeValue="https://5d31-125-129-62-2.jp.ngrok.io/mobileA" squareSize=100/>
+					<QRCode codeValue="https://7114-125-129-62-2.jp.ngrok.io/mobileA" squareSize=100/>
 				</center>
 		    </div>
 			<h1 class="main-text">주문하시려면</h1>
