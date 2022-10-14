@@ -30,7 +30,7 @@
     Button, 
     // Segmented,
     // SegmentedButton,   
-  } from 'konsta/svelte';
+  } from 'konsta/svelte'; 
 
   let leftPanelOpened = false;
   let rightPanelOpened = false;
