@@ -25,7 +25,6 @@ function AddComma(num)
 
 async function fvSelected(name, qty, price) {
 
-//   alert('11')
   try {
 
     // Add the new friend!
@@ -47,13 +46,11 @@ async function fvSelected(name, qty, price) {
 
     status = `gMeatadata successfully added. Got id ${id}`;
     
-    // Reset form:
 
   } catch (error) {
     status = `Failed to add ${gName}: ${error}`;
   }
 
-//   console.log(id)
 }	
  </script>
 
