@@ -327,7 +327,7 @@ const onNameChange = (e) => {
   onBackdropClick={() => (rightPanelOpened = false)}
   >
   <Page>
-    <Navbar title="주문내역">
+    <Navbar title="주문 내역">
       <Link slot="right" navbar onClick={() => (rightPanelOpened = false)}>
         Close
       </Link>
