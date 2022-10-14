@@ -1,7 +1,7 @@
 
 <script>
 // import { setContext, getContext } from 'svelte'
-import { db, Storage } from "../common/DataStore"
+import { db } from "../common/DataStore"
 
 	let foo = 'baz'
 	let bar = 'qux'

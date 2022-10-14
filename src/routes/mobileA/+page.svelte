@@ -14,7 +14,6 @@
 		{ name:'좋은쉐이크',   price:1500, img:'' },
 		{ name:'미친쉐이크',   price:500,  img:'' },	
 		{ name:'졸라쉐이크',   price:500,  img:'' },
-	
 	];
 
 function AddComma(num)             

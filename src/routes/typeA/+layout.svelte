@@ -1,6 +1,6 @@
 
 <script>
-  import { db, Storage } from "../common/DataStore"
+  import { db } from "../common/DataStore"
   import { liveQuery } from "dexie"
 
   let total_qty = 0;

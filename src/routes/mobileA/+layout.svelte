@@ -413,7 +413,7 @@ const onNameChange = (e) => {
           <Block class="space-y-4">
             <div class="QR-display">
               <div>
-                <QRCode style="width:500px" codeValue="https://cdae-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
+                <QRCode style="width:500px" codeValue="https://5d31-125-129-62-2.jp.ngrok.io/mobileA" squareSize=500/>
                 <!-- <QrCode style="width:500px" value="https://cdae-125-129-62-2.jp.ngrok.io/mobileA"/> -->
               </div>
               <div class="QR-text">
