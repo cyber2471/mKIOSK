@@ -189,8 +189,8 @@ function orderUpdate(idx,curQty,nextQty,curPrice,uPrice) {
 		gQty:qty,
 		gAttr: {shot:'0', size:{tall:'0', grande:'0', vanti:'0'}, decaf:{decaf:'0', half_decaf:'0'}, 
 		        cup:{single_use:'0', mug_cup:'0', personal_cup:'0'}, syrup:{vanila:'0', hazelnut:'0', caramel:'0'},
-                whipping: {nomal_whipping:{less:0, medium:0, more:0 }, espreso_whipping:{less:0, medium:0, more:0 }},
-				drizzle: {caramel:{less:0, medium:0, more:0 }, chocolate: {less:0, medium:0, more:0 }}
+                whipping: {nomal_whipping:{less:0, normal:0, more:0 }, espreso_whipping:{less:0, normal:0, more:0 }},
+				drizzle: {caramel:{less:0, normal:0, more:0 }, chocolate: {less:0, normal:0, more:0 }}
 			   }, 
 		gPrice:price, 
 		uPrice:price,
@@ -327,7 +327,7 @@ const onNameChange = (e) => {
   onBackdropClick={() => (rightPanelOpened = false)}
   >
   <Page>
-    <Navbar title="주문 내역">
+    <Navbar title="주문내역">
       <Link slot="right" navbar onClick={() => (rightPanelOpened = false)}>
         Close
       </Link>
